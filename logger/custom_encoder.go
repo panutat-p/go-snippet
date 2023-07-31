@@ -76,6 +76,10 @@ func (e *CustomEncoder) MaskFields(data any) any {
 				continue
 			}
 			val := value.MapIndex(key)
+			if val.IsNil() {
+				newData.SetMapIndex(key, val)
+				continue
+			}
 			if val.Kind() == reflect.Ptr && !val.IsNil() {
 				val = val.Elem()
 			}
