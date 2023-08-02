@@ -88,7 +88,7 @@ func TestCustomEncoder_EncodeEntry_HTTP_body(t *testing.T) {
 	fmt.Println(b)
 	assert.Equal(
 		t,
-		"{\"my_map\":{\"animal\":\"🐵\",\"credentials\":{\"email\":\"monkey@gmail.com\",\"password\":\"***\"},\"profile\":{\"address\":\"111/222 banana road\",\"name\":\"John Doe\",\"uuid\":null}}}\n",
+		"{\"monkey\":{\"animal\":\"🐵\",\"credentials\":{\"email\":\"monkey@gmail.com\",\"password\":\"***\"},\"profile\":{\"address\":\"111/222 banana road\",\"name\":\"John Doe\",\"uuid\":null}}}\n",
 		b.String(),
 	)
 }
