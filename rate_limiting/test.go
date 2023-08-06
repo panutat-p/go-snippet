@@ -22,7 +22,7 @@ func TestRateLimit_fixed_window(t *testing.T) {
 }
 
 // https://medium.com/@isuruvihan/rate-limiting-in-go-controlling-traffic-with-efficiency-6a5ef7444ef8
-func TestRateLimit_tojen_bucket(t *testing.T) {
+func TestRateLimit_token_bucket(t *testing.T) {
 	limiter := rate.NewLimiter(rate.Limit(10), 5) // Allow 10 requests per second with a burst of 5
 	for i := 0; i < 200; i++ {
 		if !limiter.Allow() {
