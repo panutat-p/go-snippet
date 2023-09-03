@@ -1,7 +1,8 @@
 package log_slog
 
 import (
-   "log/slog"
+	"log/slog"
+	"testing"
 )
 
 // https://pcpratheesh.medium.com/an-overview-of-slog-a-structured-logging-package-for-go-6dec67215b9a
