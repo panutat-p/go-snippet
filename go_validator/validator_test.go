@@ -22,7 +22,7 @@ func TestValidator_profile(t *testing.T) {
 
 func TestValidator_ValidateHeight(t *testing.T) {
 	validate := validator.New()
-	validate.RegisterValidation("validHeight", validateHeight)
+	validate.RegisterValidation("validHeight", ValidateHeight)
 
 	person := Person{
 		Name  : "John",
