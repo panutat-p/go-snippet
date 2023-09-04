@@ -7,16 +7,13 @@ type Profile struct {
 
 type Person struct {
 	Name   string `validate:"required"`
-	Height string `validate:"required,validHeight"`
+	Height int    `validate:"required,validHeight"`
 }
 
 func ValidateHeight(fl validator.FieldLevel) bool {
-	height, err := strconv.Atoi(fl.Field().String())
-	if err != nil {
-		return false
-	}
-
 	minHeight := 30
 	maxHeight := 300
-	return height >= minHeight && height <= maxHeight
+
+	height := fl.Field().Int()
+	return height >= int64(minHeight) && height <= int64(maxHeight)
 }
