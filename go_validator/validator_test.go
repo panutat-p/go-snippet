@@ -19,3 +19,17 @@ func TestValidator_profile(t *testing.T) {
 		t.Error("validation error:", err)
 	}
 }
+
+func TestValidator_ValidateHeight(t *testing.T) {
+	validate := validator.New()
+	validate.RegisterValidation("validHeight", validateHeight)
+
+	person := Person{
+		Name  : "John",
+		Height: 5,      // Height is out of the valid range
+	}
+
+	if err := validate.Struct(person); err != nil {
+		t.Error("validation error:", err)
+	}
+}
