@@ -7,6 +7,8 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
+// https://github.com/go-playground/validator
+
 func TestValidator_profile(t *testing.T) {
 	validate := validator.New()
 
