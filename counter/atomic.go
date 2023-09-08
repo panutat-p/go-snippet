@@ -1,29 +1,32 @@
-package counter
+package main
 
 import (
     "fmt"
-    "sync"
     "sync/atomic"
+    "time"
 )
 
-// https://pkg.go.dev/sync/atomic
-// https://gobyexample.com/atomic-counters
-
 func main() {
-    var ops uint64
-    var wg sync.WaitGroup
+    var count Counter
+    quit := make(chan bool)
 
-    for i := 0; i < 50; i++ {
-        wg.Add(1)
-
+    for {
         go func() {
-            for c := 0; c < 1000; c++ {
-                atomic.AddUint64(&ops, 1)
+            for i := 0; i < 10; i++ {
+                c := count.Increment()
+                fmt.Println("c:", c)
+                time.Sleep(time.Second)
             }
-            wg.Done()
         }()
+        time.Sleep(5*time.Second)
     }
+    <-quit
+}
 
-    wg.Wait()
-    fmt.Println("ops:", ops)
+type Counter struct {
+    value atomic.Uint32
+}
+
+func (c Counter) Increment() uint32 {
+    return c.value.Add(1)
 }
