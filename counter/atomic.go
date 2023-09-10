@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+    // lint spaces 4
 	var quit chan bool
     var count = NewCounter()
 	var c uint32
