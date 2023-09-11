@@ -1,7 +1,7 @@
 package counter
 
 type Counter struct {
-    value atomic.Uint32
+	value atomic.Uint32
 }
 
 func NewCounter() *Counter {
@@ -9,5 +9,5 @@ func NewCounter() *Counter {
 }
 
 func (c *Counter) Increment() uint32 {
-    return c.value.Add(1)
+	return c.value.Add(1)
 }
