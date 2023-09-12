@@ -11,3 +11,7 @@ func NewCounter() *Counter {
 func (c *Counter) Increment() uint32 {
 	return c.value.Add(1)
 }
+
+func (c *Counter) Value() uint32 {
+    return c.value.Load()
+}
