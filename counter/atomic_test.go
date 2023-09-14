@@ -20,7 +20,7 @@ func TestCounter_increment_go_routines(t *testing.T) {
 		for {
 			c = count.Increment()
 			fmt.Println("🟢 c:", c)
-			time.Sleep(1 * time.Second)
+			time.Sleep(100 * time.Millisecond)
 		}
 	}()
 
@@ -28,7 +28,7 @@ func TestCounter_increment_go_routines(t *testing.T) {
 		for {
 			c = count.Increment()
 			fmt.Println("🔵 c:", c)
-			time.Sleep(1 * time.Second)
+			time.Sleep(100 * time.Millisecond)
 		}
 	}()
 
@@ -36,7 +36,7 @@ func TestCounter_increment_go_routines(t *testing.T) {
 		for {
 			c = count.Increment()
 			fmt.Println("🟠 c:", c)
-			time.Sleep(1 * time.Second)
+			time.Sleep(100 * time.Millisecond)
 		}
 	}()
 
