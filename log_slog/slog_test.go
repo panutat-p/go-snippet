@@ -41,3 +41,19 @@ func TestSlog_json_handler(t *testing.T) {
 		),
 	)
 }
+
+func TestSlog_caller(t *testing.T) {
+	h := slog.NewTextHandler(os.Stdout, nil)
+	logger := slog.New(h)
+	func(){
+		pc, file, line, _ := runtime.Caller(skipFrames)
+    	callingFunc := runtime.FuncForPC(pc).Name()
+		logger.Info(
+			"Test caller source",
+			slog.String("app-version", "v0.0.1"),
+			slog.Int("release-version", 1),
+			slog.String("source", fmt.Sprintf("%s:%d", file, line)),
+			slog.String("function", callingFunc),
+		)
+  	}()
+}
