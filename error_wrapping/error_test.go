@@ -20,3 +20,11 @@ func TestErrors_join(t *testing.T) {
 		fmt.Println("err is err2")
 	}
 }
+
+func TestErrors_unwrap(t *testing.T) {
+	err1 := errors.New("apple")
+	err2 := fmt.Errorf("banana: %w", err1)
+	fmt.Println(err2) // banana: apple
+	fmt.Println(errors.Unwrap(err2)) // apple
+	fmt.Println(err2) // banana: apple
+}
