@@ -3,6 +3,8 @@ package error_wrapping
 import (
 	"errors"
 	"fmt"
+    "io/fs"
+	"os"
 	"testing"
 )
 
@@ -27,4 +29,13 @@ func TestErrors_unwrap(t *testing.T) {
 	fmt.Println(err2) // banana: apple
 	fmt.Println(errors.Unwrap(err2)) // apple
 	fmt.Println(err2) // banana: apple
+}
+
+func TestErrors_is(t *testing.T) {
+    _, err := os.Open("non-existing")
+    if errors.Is(err, fs.ErrNotExist) {
+        fmt.Println("file does not exist")
+    } else {
+        t.Error("wrong error type")
+    }
 }
