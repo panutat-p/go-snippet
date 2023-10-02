@@ -34,8 +34,18 @@ func TestErrors_unwrap(t *testing.T) {
 func TestErrors_is(t *testing.T) {
     _, err := os.Open("non-existing")
     if errors.Is(err, fs.ErrNotExist) {
-        fmt.Println("file does not exist")
+        fmt.Println("expected err:", err)
     } else {
         t.Error("wrong error type")
     }
+}
+
+func TestErrors_as(t *testing.T) {
+	var pathError *fs.PathError
+    _, err := os.Open("non-existing")
+	if errors.As(err, &pathError) {
+	    fmt.Println("expected err:", err)
+	} else {
+		t.Error("wrong error type")
+	}
 }
