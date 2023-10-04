@@ -13,3 +13,8 @@ func PrintType(x any) {
 		fmt.Println("I don't recognize the type.")
 	}
 }
+
+func PrintValue(x any) {
+	v := reflect.ValueOf(x)
+	fmt.Println("value ", v)
+}
