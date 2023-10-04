@@ -1,6 +1,6 @@
 package reflection
 
-func Print(x any) {
+func PrintType(x any) {
 	t := reflect.TypeOf(x)
 	switch t.Kind() {
 	case reflect.Int:
