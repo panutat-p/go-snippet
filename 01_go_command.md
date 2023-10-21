@@ -29,12 +29,24 @@ https://go.dev/ref/mod
 go mod init project-name
 ```
 
+Install a dependency without updating other dependencies
 ```shell
 go get github.com/joho/godotenv
 ```
 
+Upgrade to the latest version if the package is already a dependency
+```shell
+go get -u github.com/joho/godotenv
+```
+
+Remove any unnecessary dependencies and ensure the cleanliness of your module files
 ```shell
 go mod tidy
+```
+
+Download the dependencies specified in `go.mod`
+```shell
+go mod download
 ```
 
 ```shell
