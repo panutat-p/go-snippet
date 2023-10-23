@@ -1,8 +1,8 @@
-# Basic
+# Control flow
 
 https://go.dev/ref/spec
 
-## Control flow
+## Function
 ```go
 func PrintDigit(num int) {
 	if num < 0 {
