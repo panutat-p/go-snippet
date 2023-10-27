@@ -14,7 +14,7 @@ fmt.Println(sl)
 
 ```go
 for _, e := range "hello world" {
-	fmt.Println(e) // e is rune
+	fmt.Println(e, string(e))
 }
 ```
 
