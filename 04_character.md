@@ -1,5 +1,20 @@
 # Character
 
+## Rune
+
+```go
+for _, e := range "hello world" {
+	fmt.Println(e) // e is rune
+}
+```
+
+```go
+// INT convert '0' to 0, '1' to 1, ...
+func INT(r rune) int {
+	return int(r - '0')
+}
+```
+
 ## Unicode
 
 ```go
