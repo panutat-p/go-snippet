@@ -36,3 +36,9 @@ i, found := slices.BinarySearch(sl, 7)
 fmt.Println(i) // 3
 fmt.Println(found) // true
 ```
+
+```go
+letters := []string{"a", "b", "c", "d", "e"}
+letters = slices.Delete(letters, 1, 2)
+fmt.Println(letters) // [a c d e]
+```
