@@ -3,6 +3,16 @@
 ## Rune
 
 ```go
+r := rune(43)
+fmt.Println(r)
+```
+
+```go
+sl := []rune("hello world")
+fmt.Println(sl)
+```
+
+```go
 for _, e := range "hello world" {
 	fmt.Println(e) // e is rune
 }
@@ -15,12 +25,15 @@ func INT(r rune) int {
 }
 ```
 
-## Unicode
+```go
+if unicode.IsLetter('A') {
+	fmt.Println("🟢", 'A')
+}
+```
 
 ```go
-r := rune(97)
-if unicode.IsLetter(r) {
-	fmt.Println("r is a letter:", string(r))
+if unicode.IsDigit('3') {
+	fmt.Println("🟢", '3')
 }
 ```
 
