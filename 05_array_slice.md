@@ -24,8 +24,8 @@ fmt.Println(nums) // [1 2 2 3 5 7 8 9]
 ```
 
 ### Less function func(i, j int) bool
-* returns `true`: elements at index i should come before elements at index j
-* returns `false`: elements at index i should come after or be equal to elements at index j
+* returns `true`: elements at index `i` should come before elements at index `j`
+* returns `false`: elements at index `i` should come after or be equal to elements at index `j`
 
 ```go
 nums := []uint32{9, 3, 2, 8, 1, 5, 7, 2}
