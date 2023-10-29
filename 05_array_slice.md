@@ -23,6 +23,10 @@ sort.Ints(nums)   // ascending order
 fmt.Println(nums) // [1 2 2 3 5 7 8 9]
 ```
 
+### Less function func(i, j int) bool
+* returns `true`: elements at index i should come before elements at index j
+* returns `false`: elements at index i should come after or be equal to elements at index j
+
 ```go
 nums := []uint32{9, 3, 2, 8, 1, 5, 7, 2}
 sort.Slice(nums, func(i, j int) bool {
@@ -45,6 +49,22 @@ sort.Slice(words, func(i, j int) bool {
 	return words[i] > words[j] // descending order
 })
 fmt.Println(words) // [orange grape cherry banana apple]
+```
+
+```go
+// Sort positive numbers in ascending order
+// Swap negative numbers to the back in original order
+nums := []int{4, -3, 2, -1, -7}
+sort.Slice(nums, func(i, j int) bool {
+	if nums[i] < 0 {
+		return false // preserve
+	}
+	if nums[j] < 0 {
+		return true // swap
+	}
+	return nums[i] < nums[j]
+})
+fmt.Println(nums) // [2 4 -3 -1 -7]
 ```
 
 ## Package slices
