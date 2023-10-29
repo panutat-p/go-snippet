@@ -50,3 +50,14 @@ s := "Hello World"
 sl := strings.Split(s, " ")
 fmt.Println(sl)
 ```
+
+```go
+func Reverse(s string) string {
+	sl := []rune(s)
+	var ret []rune
+	for i := len(sl) - 1; i > -1; i -= 1 {
+		ret = append(ret, sl[i])
+	}
+	return string(ret)
+}
+```
