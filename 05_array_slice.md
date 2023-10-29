@@ -13,7 +13,9 @@ func Pop(sl []int, idx int) []int {
 }
 ```
 
-## Pakcage sort
+## Package sort
+
+https://pkg.go.dev/sort
 
 ```go
 nums := []int{9, 3, 2, 8, 1, 5, 7, 2}
