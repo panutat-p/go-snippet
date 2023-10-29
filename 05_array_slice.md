@@ -13,7 +13,15 @@ func Pop(sl []int, idx int) []int {
 }
 ```
 
-## `slices`
+## Pakcage sort
+
+```go
+nums := []int{9, 3, 2, 8, 1, 5, 7, 2}
+sort.Ints(nums)
+fmt.Println(nums) // [1 2 2 3 5 7 8 9]
+```
+
+## Package slices
 
 https://pkg.go.dev/slices
 
