@@ -17,8 +17,32 @@ func Pop(sl []int, idx int) []int {
 
 ```go
 nums := []int{9, 3, 2, 8, 1, 5, 7, 2}
-sort.Ints(nums)
+sort.Ints(nums)   // ascending order
 fmt.Println(nums) // [1 2 2 3 5 7 8 9]
+```
+
+```go
+nums := []uint32{9, 3, 2, 8, 1, 5, 7, 2}
+sort.Slice(nums, func(i, j int) bool {
+	return nums[i] < nums[j] // ascending order
+})
+fmt.Println(nums) // [1 2 2 3 5 7 8 9]
+```
+
+```go
+rsl := []rune("hello world!")
+sort.Slice(rsl, func(i, j int) bool {
+	return rsl[i] < rsl[j] // ascending order
+})
+fmt.Println(rsl) // [32 33 100 101 104 108 108 108 111 111 114 119]
+```
+
+```go
+words := []string{"banana", "apple", "orange", "grape", "cherry"}
+sort.Slice(words, func(i, j int) bool {
+	return words[i] > words[j] // descending order
+})
+fmt.Println(words) // [orange grape cherry banana apple]
 ```
 
 ## Package slices
