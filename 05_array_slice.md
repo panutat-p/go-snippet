@@ -1,5 +1,15 @@
 # Array & Slice
 
+```go
+var sl []int
+fmt.Println(sl == nil) // true
+```
+
+```go
+sl := []int{}
+fmt.Println(sl == nil) // false
+```
+
 ## Pop
 
 ```go
