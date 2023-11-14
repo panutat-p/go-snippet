@@ -12,6 +12,10 @@ Set
 go env -w GO111MODULE=on
 ```
 
+```shell
+go env -w GOPRIVATE='private-repo.com/*'
+```
+
 Unset
 ```shell
 go env -u GO111MODULE
