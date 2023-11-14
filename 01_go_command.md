@@ -12,6 +12,8 @@ Set
 go env -w GO111MODULE=on
 ```
 
+https://goproxy.io/docs/GOPRIVATE-env.html
+
 ```shell
 go env -w GOPRIVATE='private-repo.com/*'
 ```
