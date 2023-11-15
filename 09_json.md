@@ -1,4 +1,30 @@
-# Custom JSON Marshaller
+# encoding/json
+
+https://pkg.go.dev/encoding/json
+
+## Marshal
+
+```go
+
+```
+
+```go
+func PrintStruct(o any) {
+	b, err := json.MarshalIndent(o, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(b))
+}
+```
+
+## Unmarshal
+
+```go
+
+```
+
+## Custom JSON marshaller
 
 ```go
 package main
