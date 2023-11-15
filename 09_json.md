@@ -5,7 +5,28 @@ https://pkg.go.dev/encoding/json
 ## Marshal
 
 ```go
+type Person struct {
+	Name  string `json:"name"`
+	Age   int    `json:"age"`
+	City  string `json:"city"`
+	Email string `json:"email"`
+}
 
+func main() {
+	person := Person{
+		Name:  "John Doe",
+		Age:   30,
+		City:  "New York",
+		Email: "john@gmail.com",
+	}
+
+	b, err := json.Marshal(person)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(string(b))
+}
 ```
 
 ```go
@@ -21,19 +42,30 @@ func PrintStruct(o any) {
 ## Unmarshal
 
 ```go
+type Person struct {
+	Name  string `json:"name"`
+	Age   int    `json:"age"`
+	City  string `json:"city"`
+	Email string `json:"email"`
+}
 
+func main() {
+	s := `{"name":"John Doe","age":30,"city":"New York","email":"john@gmail.com"}`
+	b := []byte(s)
+
+	var person Person
+	err := json.Unmarshal(b, &person)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%+v\n", person)
+}
 ```
 
 ## Custom JSON marshaller
 
 ```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type Person struct {
 	Name    string `json:"name"`
 	Age     int    `json:"age"`
@@ -73,13 +105,6 @@ func main() {
 ```
 
 ```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type Person struct {
 	Name    string
 	Age     int
