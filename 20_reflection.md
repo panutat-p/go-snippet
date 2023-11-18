@@ -7,6 +7,21 @@ https://lpar.ath0.com/2016/04/20/reflection-go-modifying-struct-values
 ## Simple reflection
 
 ```go
+s := "hello"
+val := reflect.ValueOf(s)
+fmt.Println(val.Type()) // string
+fmt.Println(val.Type()) // string
+```
+
+```go
+type User struct{}
+u := User{}
+val := reflect.ValueOf(u)
+fmt.Println(val.Type()) // main.User
+fmt.Println(val.Kind()) // struct
+```
+
+```go
 func PrintType(x any) {
 	t := reflect.TypeOf(x)
 	switch t.Kind() {
