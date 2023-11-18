@@ -44,27 +44,36 @@ func PrintObject(x any) {
 	t := reflect.TypeOf(x)
 	switch t.Kind() {
 	case reflect.Ptr:
-		v := reflect.ValueOf(x).Elem()
-		fmt.Printf("%s: %p -> %+v\n", t, x, v)
-		if v.Kind() == reflect.Struct {
-			PrintObject(v.Interface())
+		val := reflect.ValueOf(x).Elem()
+		fmt.Printf("%s: %p -> %v\n", t, x, val)
+		if val.Kind() == reflect.Struct {
+			iterateFields(val)
 		}
 	case reflect.Struct:
 		val := reflect.ValueOf(x)
-		for i := 0; i < t.NumField(); i++ {
-			field := t.Field(i)
-			if field.PkgPath != "" {
-				fmt.Printf("%s: %v\n", field.Name, "***")
-				continue
-			}
-			v := val.Field(i)
-			fmt.Printf("%s: %v\n", field.Name, v.Interface())
-			if v.Kind() == reflect.Struct {
-				PrintObject(v.Interface())
-			}
-		}
+		iterateFields(val)
 	default:
 		fmt.Printf("%s: %v\n", t, x)
+	}
+}
+
+func iterateFields(val reflect.Value) {
+	for i := 0; i < val.NumField(); i++ {
+		t := val.Type()
+		f := t.Field(i)
+		if f.PkgPath != "" {
+			fmt.Printf("%s: %v\n", f.Name, "***")
+			continue
+		}
+		v := val.Field(i)
+		if v.Kind() == reflect.Ptr {
+			v = v.Elem()
+		}
+		fmt.Printf("%s: %v\n", f.Name, v)
+		if v.Kind() == reflect.Struct {
+			iterateFields(v)
+			continue
+		}
 	}
 }
 ```
