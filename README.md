@@ -43,7 +43,7 @@ project-root-directory/
     ...
 ```
 
-### pkg
+### pkg directory
 
 https://pkg.go.dev/github.com/geektime007/mgmt/pkg
 
