@@ -12,7 +12,7 @@ var logger *slog.Logger
 func main() {
 	options := &slog.HandlerOptions{
 		Level: slog.LevelInfo,
-		AddSource: true,
+		AddSource: false,
 	}
 	logger = slog.New(slog.NewJSONHandler(os.Stdout, options))
 	logger.Info(
