@@ -1,10 +1,8 @@
-# Struct Validator
+# Go Validator
 
-https://pkg.go.dev/github.com/go-playground/validator/v10
+https://github.com/go-playground/validator
 
-## go-playground/validator/v10
-
-https://pkg.go.dev/github.com/go-playground/validator/v10
+## Built-in
 
 ```go
 type Profile struct {
@@ -21,5 +19,37 @@ val := validator.New()
 err := val.Struct(invalidProfile)
 if err != nil {
   fmt.Printf("Validation failed\n%s\n", err)
+}
+```
+
+## Custom
+
+```go
+type Person struct {
+	Name   string `validate:"required"`
+	Height int    `validate:"required,validHeight"`
+}
+
+func ValidateHeight(fl validator.FieldLevel) bool {
+	minHeight := 30
+	maxHeight := 300
+
+	height := fl.Field().Int()
+	return height >= int64(minHeight) && height <= int64(maxHeight)
+}
+```
+
+```go
+validate := validator.New()
+validate.RegisterValidation("validHeight", ValidateHeight)
+
+person := Person{
+  Name:   "John",
+  Height: 5, // Height is out of the valid range
+}
+err := validate.Struct(person)
+if err != nil {
+  fmt.Println("🔴 Validation failed")
+  fmt.Println(err) // Key: 'Person.Height' Error:Field validation for 'Height' failed on the 'validHeight' tag
 }
 ```
