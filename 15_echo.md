@@ -34,12 +34,12 @@ https://echo.labstack.com/docs/middleware/logger#new-requestlogger-middleware
 
 ```go
 func RequestLogger(next echo.HandlerFunc) echo.HandlerFunc {
-    return func(c echo.Context) error {
-        start := time.Now()
-        err := next(c)
-        latency := time.Since(start)
+	return func(c echo.Context) error {
+		t1 := time.Now()
+		err := next(c)
+		latency := time.Since(t1)
 		fmt.Printf("%s %s %v \n", c.Request().Method, c.Request().URL.Path, latency)
-        return err
-    }
+		return err
+	}
 }
 ```
