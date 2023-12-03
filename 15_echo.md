@@ -69,7 +69,7 @@ func NewWebProxy(e *echo.Echo) {
       "/web/*": "/index",
     },
   }
-  api := e.Group("/web")
-  api.Use(middleware.ProxyWithConfig(conf))
+  g := e.Group("/web")
+  g.Use(middleware.ProxyWithConfig(conf))
 }
 ```
