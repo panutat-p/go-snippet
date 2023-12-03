@@ -18,7 +18,10 @@ invalidProfile := Profile{
 val := validator.New()
 err := val.Struct(invalidProfile)
 if err != nil {
-  fmt.Printf("Validation failed\n%s\n", err)
+  fmt.Println("🔴 Validation failed")
+  fmt.Println(err)
+  // Key: 'Profile.Username' Error:Field validation for 'Username' failed on the 'alphanum' tag
+  // Key: 'Profile.Password' Error:Field validation for 'Password' failed on the 'min' tag
 }
 ```
 
