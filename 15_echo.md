@@ -49,27 +49,27 @@ func RequestLogger(next echo.HandlerFunc) echo.HandlerFunc {
 ```go
 func NewWebProxy(e *echo.Echo) {
   url1, err := url.Parse("http://localhost:4000")
-	if err != nil {
-		fmt.Println("🔴 Failed to parse URL")
-		panic(err)
-	}
-	url2, err := url.Parse("http://localhost:4001")
-	if err != nil {
-		fmt.Println("🔴 Failed to parse URL")
-		panic(err)
-	}
-	targets := []*middleware.ProxyTarget{
-		{URL: url1},
-		{URL: url2},
-	}
-	conf := middleware.ProxyConfig{
-		Balancer: middleware.NewRoundRobinBalancer(targets),
-		Rewrite: map[string]string{
-			"/web":   "/index",
-			"/web/*": "/index",
-		},
-	}
-	api := e.Group("/web")
-	api.Use(middleware.ProxyWithConfig(conf))
+  if err != nil {
+    fmt.Println("🔴 Failed to parse URL")
+    panic(err)
+  }
+  url2, err := url.Parse("http://localhost:4001")
+  if err != nil {
+    fmt.Println("🔴 Failed to parse URL")
+    panic(err)
+  }
+  targets := []*middleware.ProxyTarget{
+    {URL: url1},
+    {URL: url2},
+  }
+  conf := middleware.ProxyConfig{
+    Balancer: middleware.NewRoundRobinBalancer(targets),
+    Rewrite: map[string]string{
+      "/web":   "/index",
+      "/web/*": "/index",
+    },
+  }
+  api := e.Group("/web")
+  api.Use(middleware.ProxyWithConfig(conf))
 }
 ```
