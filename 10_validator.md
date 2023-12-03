@@ -31,11 +31,11 @@ type Person struct {
 }
 
 func ValidateHeight(fl validator.FieldLevel) bool {
-	minHeight := 30
-	maxHeight := 300
-
-	height := fl.Field().Int()
-	return height >= int64(minHeight) && height <= int64(maxHeight)
+  minHeight := 30
+  maxHeight := 300
+  
+  height := fl.Field().Int()
+  return height >= int64(minHeight) && height <= int64(maxHeight)
 }
 ```
 
