@@ -14,3 +14,17 @@ if errors.Is(err, ErrRedis) {
 fmt.Println("This is Redis error")
 }
 ```
+
+```go
+var (
+	ErrHTTP = errors.New("http")
+)
+
+func GetExample() error {
+    _, err := http.Get("https://example.com")
+  if err != nil {
+    return errors.Join(ErrHTTP, err)
+  }
+  return nil
+}
+```
