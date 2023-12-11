@@ -42,7 +42,9 @@ func main() {
 https://earthly.dev/blog/golang-errors
 
 * Error wrapping can provide additional context about the lineage of an error, in ways similar to a traditional stack-trace
-* `fmt.Errorf` with a `%w`
+* Use `fmt.Errorf` with a `%w`
+  * `fmt.Errorf("SetUserAge: failed executing db update: %w", err)`
+  * `fmt.Errorf("FindAndSetUserAge: %w", err)`
 * Wrapping also preserves the original error
   * which means `errors.Is` and `errors.As` continue to work
   * regardless of how many times an error has been wrapped
