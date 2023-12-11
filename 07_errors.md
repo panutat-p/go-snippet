@@ -17,7 +17,7 @@ fmt.Println("This is Redis error")
 
 ```go
 var (
-	ErrHTTP = errors.New("http")
+  ErrHTTP = errors.New("http")
 )
 
 func GetExample() error {
