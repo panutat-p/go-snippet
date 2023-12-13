@@ -4,25 +4,19 @@ https://pkg.go.dev/errors
 
 https://tip.golang.org/doc/go1.20#errors
 
-## Return wrapped error using `errors.Join`
+* Wrapping also preserves the original error
+  * which means `errors.Is` and `errors.As` continue to work
+  * regardless of how many times an error has been wrapped
+
+## Error wrapping
+
+* ⚠️ `errors.Unwrap` does not work with `errors.Join`
 
 ```go
 var (
   ErrHTTP = errors.New("http")
 )
 
-func GetExample() error {
-    _, err := http.Get("https://example.invalid")
-  if err != nil {
-    return errors.Join(ErrHTTP, err)
-  }
-  return nil
-}
-```
-
-## Inspect wrapped error using `errors.Is`
-
-```go
 func main() {
   err := GetExample()
   if err != nil {
@@ -35,17 +29,39 @@ func main() {
     }
   }
 }
+
+func GetExample() error {
+    _, err := http.Get("https://example.invalid")
+  if err != nil {
+    return errors.Join(ErrHTTP, err)
+  }
+  return nil
+}
 ```
 
-## Error wrapping
+# Error unwrapping
 
 https://earthly.dev/blog/golang-errors
 
-* Error wrapping can provide additional context about the lineage of an error, in ways similar to a traditional stack-trace
-* Use `fmt.Errorf` with a `%w`
-  * `fmt.Errorf("SetUserAge: failed executing db update: %w", err)`
-  * `fmt.Errorf("FindAndSetUserAge: %w", err)`
-* Wrapping also preserves the original error
-  * which means `errors.Is` and `errors.As` continue to work
-  * regardless of how many times an error has been wrapped
-* Call `errors.Unwrap` to return the previous error in the chain
+* Use `fmt.Errorf` with `%w` to wrap an error
+* `errors.Unwrap` does not change its argument
+* `errors.Unwrap` returns the original error, ignoring string format
+
+```go
+err := errors.New("failed to get user")
+wrappedErr := fmt.Errorf("http: %w", err)
+fmt.Println(wrappedErr)
+fmt.Println(errors.Unwrap(wrappedErr))
+```
+
+## `errors.As`
+
+```go
+var pathError *fs.PathError
+_, err := os.Open("non-existing")
+if errors.As(err, &pathError) {
+  fmt.Println("err:", err)
+  fmt.Println("pathError:", pathError)
+  // err and pathError are the same instance
+}
+```
