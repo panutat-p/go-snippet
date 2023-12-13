@@ -39,7 +39,7 @@ func GetExample() error {
 }
 ```
 
-# Error unwrapping
+## Error unwrapping
 
 https://earthly.dev/blog/golang-errors
 
