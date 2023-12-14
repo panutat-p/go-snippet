@@ -30,7 +30,7 @@ func main() {
     Age:   30,
     City:  "New York",
     Email: "john@gmail.com",
-	}
+  }
 
 	b, err := json.Marshal(person)
 	if err != nil {
@@ -75,7 +75,7 @@ func main() {
 }
 ```
 
-## Custom JSON marshaller
+## Marshal to null (override)
 
 ```go
 type Person struct {
@@ -97,13 +97,15 @@ func (p Person) MarshalJSON() ([]byte, error) {
     })
 	}
 
-	return json.Marshal(&struct {
-		Alias
-	}{
-		Alias: (Alias)(p),
-	})
+  return json.Marshal(&struct {
+    Alias
+  }{
+    Alias: (Alias)(p),
+  })
 }
+```
 
+```go
 func main() {
   person1 := Person{Name: "John", Age:23, Address: "123 Main St"}
   person2 := Person{Name: "Alice", Age: 35, Address: ""}
@@ -115,6 +117,8 @@ func main() {
   fmt.Println("person2:", string(jsonStr2))
 }
 ```
+
+## Marshal to null (declare tags in method)
 
 ```go
 type Person struct {
