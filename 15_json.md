@@ -149,7 +149,9 @@ func (p Person) MarshalJSON() ([]byte, error) {
     Address: p.Address,
   })
 }
+```
 
+```go
 func main() {
   person1 := Person{Name: "John", Age: 23, Address: "123 Main St"}
   person2 := Person{Name: "Alice", Age: 35, Address: ""}
