@@ -2,6 +2,18 @@
 
 https://pkg.go.dev/encoding/json
 
+## Print struct as JSON
+
+```go
+func PrintJSON(o any) {
+  b, err := json.MarshalIndent(o, "", "  ")
+  if err != nil {
+  	panic(err)
+  }
+  fmt.Println(string(b))
+}
+```
+
 ## Marshal
 
 ```go
