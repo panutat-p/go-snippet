@@ -1,0 +1,19 @@
+# encoding/base64
+
+## string to base64
+
+```go
+func EncodeBase64(s string) string {
+  return base64.StdEncoding.EncodeToString([]byte(s))
+}
+```
+
+```go
+func DecodeBase64(s string) string {
+	b, err := base64.StdEncoding.DecodeString(s)
+	if err != nil {
+	  panic(err)
+	}
+	return string(b)
+}
+```
