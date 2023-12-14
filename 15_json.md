@@ -32,11 +32,10 @@ func main() {
     Email: "john@gmail.com",
   }
 
-	b, err := json.Marshal(person)
-	if err != nil {
+  b, err := json.Marshal(person)
+  if err != nil {
     panic(err)
-	}
-
+  }
   fmt.Println(string(b))
 }
 ```
@@ -85,7 +84,7 @@ type Person struct {
 }
 
 func (p Person) MarshalJSON() ([]byte, error) {
-	type Alias Person
+  type Alias Person
 
   if p.Address == "" {
     return json.Marshal(&struct {
@@ -95,7 +94,7 @@ func (p Person) MarshalJSON() ([]byte, error) {
       Alias:   (Alias)(p),
       Address: nil,
     })
-	}
+  }
 
   return json.Marshal(&struct {
     Alias
@@ -140,15 +139,15 @@ func (p Person) MarshalJSON() ([]byte, error) {
     })
 	}
 
-	return json.Marshal(&struct {
-		Name    string `json:"name"`
-		Age     int    `json:"age"`
-		Address string `json:"address"`
-	}{
-		Name:    p.Name,
-		Age:     p.Age,
-		Address: p.Address,
-	})
+  return json.Marshal(&struct {
+    Name    string `json:"name"`
+    Age     int    `json:"age"`
+    Address string `json:"address"`
+  }{
+    Name:    p.Name,
+    Age:     p.Age,
+    Address: p.Address,
+  })
 }
 
 func main() {
