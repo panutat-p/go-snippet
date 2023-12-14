@@ -137,7 +137,7 @@ func (p Person) MarshalJSON() ([]byte, error) {
       Age:     p.Age,
       Address: nil,
     })
-	}
+  }
 
   return json.Marshal(&struct {
     Name    string `json:"name"`
