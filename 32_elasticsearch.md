@@ -2,13 +2,13 @@
 
 https://github.com/elastic/go-elasticsearch
 
-https://www.elastic.co/guide/en/elasticsearch/client/go-api/current/getting-started-go.html#_operations
-
 ```shell
 go get github.com/elastic/go-elasticsearch/v8@latest
 ```
 
 ## Connect
+
+https://www.elastic.co/guide/en/elasticsearch/client/go-api/current/connecting.html
 
 * Starting from version 8.0, Elasticsearch offers security by default with authentication and TLS enabled to use HTTPS
 * If your cluster is configured with security explicitly disabled then you can connect via HTTP
@@ -29,9 +29,11 @@ if err != nil {
 
 ## Index
 
+https://www.elastic.co/guide/en/elasticsearch/client/go-api/current/getting-started-go.html#_operations
+
 ```go
 type Doc struct {
-	Name string `json:"name"`
+  Name string `json:"name"`
 }
 ```
 
