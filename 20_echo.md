@@ -8,8 +8,8 @@ go get github.com/labstack/echo/v4
 
 ```go
 import (
-	echomiddleware "github.com/labstack/echo/v4/middleware"
-	"github.com/labstack/echo/v4"
+  echomiddleware "github.com/labstack/echo/v4/middleware"
+  "github.com/labstack/echo/v4"
 )
 ```
 
