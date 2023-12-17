@@ -2,12 +2,22 @@
 
 https://echo.labstack.com
 
+```shell
+go get github.com/labstack/echo/v4
+```
+
+```go
+import (
+	echomiddleware "github.com/labstack/echo/v4/middleware"
+	"github.com/labstack/echo/v4"
+)
+```
+
 ## Gracefully shutdown
 
 ```go
 e := echo.New()
-e.Use(RequestLogger)
-e.GET("/hello", Hello)
+e.Use(echomiddleware.Recover())
 
 go func() {
   err := e.Start(":8080")
