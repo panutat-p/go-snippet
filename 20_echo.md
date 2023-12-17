@@ -54,6 +54,13 @@ func RequestLogger(next echo.HandlerFunc) echo.HandlerFunc {
 }
 ```
 
+## Serve static
+
+```go
+e := echo.New()
+e.File("/index", "public/index.html")
+```
+
 ## Reverse Proxy
 
 ```go
