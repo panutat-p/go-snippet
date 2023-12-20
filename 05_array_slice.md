@@ -40,7 +40,7 @@ fmt.Println(nums) // [1 2 2 3 5 7 8 9]
 ```go
 nums := []uint32{9, 3, 2, 8, 1, 5, 7, 2}
 sort.Slice(nums, func(i, j int) bool {
-	return nums[i] < nums[j] // ascending order
+  return nums[i] < nums[j] // ascending order
 })
 fmt.Println(nums) // [1 2 2 3 5 7 8 9]
 ```
@@ -48,7 +48,7 @@ fmt.Println(nums) // [1 2 2 3 5 7 8 9]
 ```go
 rsl := []rune("hello world!")
 sort.Slice(rsl, func(i, j int) bool {
-	return rsl[i] < rsl[j] // ascending order
+  return rsl[i] < rsl[j] // ascending order
 })
 fmt.Println(rsl) // [32 33 100 101 104 108 108 108 111 111 114 119]
 ```
@@ -56,7 +56,7 @@ fmt.Println(rsl) // [32 33 100 101 104 108 108 108 111 111 114 119]
 ```go
 words := []string{"banana", "apple", "orange", "grape", "cherry"}
 sort.Slice(words, func(i, j int) bool {
-	return words[i] > words[j] // descending order
+  return words[i] > words[j] // descending order
 })
 fmt.Println(words) // [orange grape cherry banana apple]
 ```
@@ -66,13 +66,13 @@ fmt.Println(words) // [orange grape cherry banana apple]
 // Swap negative numbers to the back in original order
 nums := []int{4, -3, 2, -1, -7}
 sort.Slice(nums, func(i, j int) bool {
-	if nums[i] < 0 {
-		return false // preserve
-	}
-	if nums[j] < 0 {
-		return true // swap
-	}
-	return nums[i] < nums[j]
+  if nums[i] < 0 {
+    return false // preserve
+  }
+  if nums[j] < 0 {
+    return true // swap
+  }
+  return nums[i] < nums[j]
 })
 fmt.Println(nums) // [2 4 -3 -1 -7]
 ```
