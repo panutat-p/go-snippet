@@ -1,5 +1,9 @@
 # os
 
+```go
+import "os"
+```
+
 ## Environment variables
 
 ```shell
@@ -19,10 +23,7 @@ fmt.Println(name)
 ## Directory
 
 ```go
-import (
-  "os"
-  "path/filepath"
-)
+import "path/filepath"
 ```
 
 Get current directory
