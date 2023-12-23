@@ -4,12 +4,20 @@
 import "os"
 ```
 
+## Exit
+
+```go
+os.exit(0)
+```
+
 ## Environment variables
 
+Inline ENV
 ```shell
 APP_NAME=quick-go go run main.go
 ```
 
+Linux ENV
 ```shell
 export APP_NAME=quick-go
 go run main.go
@@ -57,5 +65,27 @@ if err != nil {
 }
 for _, file := range files {
   fmt.Println(file.Name())
+}
+```
+
+Make a directory
+* `0` octal (base-8) notation
+* `7` owner
+* `5` group
+* `5` other
+
+Creates a directory
+```go
+err := os.Mkdir("app", 0755)
+if err != nil {
+  panic(err)
+}
+```
+
+Creates a directory and all necessary parent directories if they do not exist
+```go
+err := os.MkdirAll("app/v1", 0755)
+if err != nil {
+  panic(err)
 }
 ```
