@@ -47,12 +47,12 @@ func main() {
     syscall.SIGINT,
     syscall.SIGTERM,
   )
-  go Run()
+  go StartServer()
   <-stop
   fmt.Println("🟡 Gracefully shutting down")
 }
 
-func Run() {
+func StartServer() {
   time.Sleep(1<<63 - 1)
 }
 ```
