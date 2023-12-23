@@ -8,7 +8,7 @@ func CreateFile(fullPath string) error {
 	err := os.MkdirAll(dir, 0755)
 	if err != nil {
 		return err
-    }
+	}
 	file, err := os.Create(fullPath)
 	if err != nil {
 		return err
