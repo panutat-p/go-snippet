@@ -18,23 +18,30 @@ import (
 ```go
 e := echo.New()
 e.Use(echomiddleware.Recover())
+e.GET("/", func(c echo.Context) error {
+  return c.String(http.StatusOK, "Hello, Echo!")
+})
 
 go func() {
-  err := e.Start(":8080")
-  if err != nil && err != http.ErrServerClosed {
-    e.Logger.Fatal("Shutting down the server")
+  if err := e.Start(":8080"); err != nil && err != http.ErrServerClosed {
+    e.Logger.Fatal(err)
   }
 }()
 
-quit := make(chan os.Signal, 1)
-signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-<-quit
-fmt.Println("🟡 Received shutdown signal")
-ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+var stop = make(chan os.Signal, 1)
+signal.Notify(
+  stop,
+  os.Interrupt,
+  syscall.SIGINT,
+  syscall.SIGTERM,
+)
+<-stop
+fmt.Println("🟡 Gracefully shutting down")
+ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 defer cancel()
-err := e.Shutdown(ctx)
-if err != nil {
-  e.Logger.Fatal(err)
+if err := e.Shutdown(ctx); err != nil {
+  fmt.Println("🔴 Failed to Shutdown Echo")
+  fmt.Println(err)
 }
 ```
 
