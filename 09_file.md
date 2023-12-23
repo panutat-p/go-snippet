@@ -5,6 +5,13 @@ https://pkg.go.dev/os
 https://pkg.go.dev/io
 
 ```go
+import (
+  "os"
+  "path/filepath"
+)
+```
+
+```go
 // CreateFile
 // fullPath: "app/v1/file.txt"
 func CreateFile(fullPath string) error {
