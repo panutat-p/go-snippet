@@ -59,6 +59,32 @@ func StartServer() {
 }
 ```
 
+Graceful shuwdown for Echo web server
+
+```go
+e := echo.New()
+e.GET("/", func(c echo.Context) error {
+  return c.String(http.StatusOK, "Hello, Echo!")
+})
+
+go func() {
+  if err := e.Start(":8080"); err != nil && err != http.ErrServerClosed {
+    e.Logger.Fatal(err)
+  }
+}()
+
+var stop = make(chan os.Signal, 1)
+signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
+<-stop
+fmt.Println("🟡 Gracefully shutting down")
+ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+defer cancel()
+if err := e.Shutdown(ctx); err != nil {
+  fmt.Println("🔴 Failed to Shutdown Echo")
+  fmt.Println(err)
+}
+```
+
 Graceful shutdown for a script
 
 ```go
