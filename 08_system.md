@@ -38,6 +38,8 @@ import (
 )
 ```
 
+Graceful shutdown for a server
+
 ```go
 func main() {
   var stop = make(chan os.Signal, 1)
@@ -54,6 +56,35 @@ func main() {
 
 func StartServer() {
   time.Sleep(1<<63 - 1)
+}
+```
+
+Graceful shutdown for a script
+
+```go
+func main() {
+  var (
+    stop = make(chan os.Signal, 1)
+    done = make(chan bool, 1)
+  )
+  signal.Notify(
+    stop,
+    os.Interrupt,
+    syscall.SIGINT,
+    syscall.SIGTERM,
+  )
+  go Run(done)
+  select {
+    case <-stop:
+      fmt.Println("🟡 Gracefully shutting down")
+    case <-done:
+      fmt.Println("🟢 Done")
+  }
+}
+
+func Run(done chan bool) {
+  time.Sleep(time.Second * 5)
+  done <- true
 }
 ```
 
