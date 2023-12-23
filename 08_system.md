@@ -28,6 +28,35 @@ name := os.Getenv("APP_NAME")
 fmt.Println(name)
 ```
 
+## Signals
+
+```go
+import (
+  "os"
+  "os/signal"
+  "syscall"
+)
+```
+
+```go
+func main() {
+  var stop = make(chan os.Signal, 1)
+  signal.Notify(
+    stop,
+    os.Interrupt,
+    syscall.SIGINT,
+    syscall.SIGTERM,
+  )
+  go Run()
+  <-stop
+  fmt.Println("🟡 Gracefully shutting down")
+}
+
+func Run() {
+	time.Sleep(1<<63 - 1)
+}
+```
+
 ## Directory
 
 ```go
