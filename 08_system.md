@@ -12,12 +12,12 @@ os.exit(0)
 
 ## Environment variables
 
-Inline ENV
+Run Go program with inline ENV
 ```shell
 APP_NAME=quick-go go run main.go
 ```
 
-Linux ENV
+Run Go program with Linux ENV
 ```shell
 export APP_NAME=quick-go
 go run main.go
