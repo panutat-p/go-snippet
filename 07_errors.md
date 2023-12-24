@@ -1,5 +1,31 @@
 # errros
 
+## Panic & Recover
+
+* Recover is only useful inside deferred functions
+* During normal execution, a call to recover will return nil and have no other effect
+
+```go
+func main() {
+ defer Recover()
+ Run()
+}
+
+func Recover() {
+ r := recover()
+ if r != nil {
+  fmt.Println("Panic recovered, err:", r)
+ }
+}
+
+func Run() {
+ err := errors.New("app")
+ panic(err)
+}
+```
+
+## Error wrapping
+
 https://pkg.go.dev/errors
 
 https://tip.golang.org/doc/go1.20#errors
@@ -7,8 +33,6 @@ https://tip.golang.org/doc/go1.20#errors
 * Wrapping also preserves the original error
   * which means `errors.Is` and `errors.As` continue to work
   * regardless of how many times an error has been wrapped
-
-## Error wrapping
 
 * ⚠️ `errors.Unwrap` does not work with `errors.Join`
 
