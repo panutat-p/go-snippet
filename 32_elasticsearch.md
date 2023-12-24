@@ -28,27 +28,6 @@ https://www.elastic.co/blog/the-go-client-for-elasticsearch-working-with-data
 var (
   c *elasticsearch.Client
 )
-
-type Fruit struct {
-  Name  string `json:"name"`
-  Price int    `json:"price"`
-}
-```
-
-```go
-c = Connect()
-
-err := CreateIndex(context.Background())
-if err != nil {
-  panic(err)
-}
-
-fruit := Fruit{
-  Name:  "apple",
-  Price: 15,
-}
-
-Insert(context.Background(), fruit)
 ```
 
 ```go
@@ -108,7 +87,7 @@ func CreateIndex(ctx context.Context) error {
 ```
 
 ```go
-func Insert(ctx context.Context, doc Fruit) error {
+func Insert(ctx context.Context, doc any) error {
   data, err := json.Marshal(doc)
   if err != nil {
     return err
