@@ -22,29 +22,42 @@ https://www.elastic.co/blog/the-go-client-for-elasticsearch-configuration-and-cu
 
 https://www.elastic.co/blog/the-go-client-for-elasticsearch-working-with-data
 
-## Client
+## client
 
 ```go
+type Fruit struct {
+  Name  string `json:"name"`
+  Price int    `json:"price"`
+}
 
+func main() {
+  conf := elasticsearch.Config{
+    Addresses: []string{
+      "http://localhost:9200",
+    },
+    Username: "admin",
+    Password: "1234",
+  }
+  c, err := elasticsearch.NewClient(conf)
+  if err != nil {
+    panic(err)
+  }
+
+  c.Indices.Create("fruit")
+
+  fruit := Fruit{
+    Name:  "apple",
+    Price: 15,
+  }
+  data, err := json.Marshal(fruit)
+  if err != nil {
+    panic(err)
+  }
+  c.Index("fruit", bytes.NewReader(data))
+}
 ```
 
-## Indexing
-
-```go
-
-```
-
-```go
-
-```
-
-## Insert
-
-```go
-
-```
-
-## Search
+## esapi
 
 ```go
 
