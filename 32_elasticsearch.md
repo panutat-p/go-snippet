@@ -6,6 +6,10 @@ https://github.com/elastic/go-elasticsearch
 go get github.com/elastic/go-elasticsearch/v8@latest
 ```
 
+```go
+import "github.com/elastic/go-elasticsearch/v8"
+```
+
 ## Connect
 
 https://www.elastic.co/guide/en/elasticsearch/client/go-api/current/connecting.html
