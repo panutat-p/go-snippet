@@ -4,6 +4,8 @@ https://github.com/elastic/go-elasticsearch
 
 https://pkg.go.dev/github.com/elastic/go-elasticsearch/v8
 
+https://pkg.go.dev/github.com/elastic/go-elasticsearch/v8/esapi
+
 ```shell
 go get github.com/elastic/go-elasticsearch/v8@latest
 ```
