@@ -25,40 +25,122 @@ https://www.elastic.co/blog/the-go-client-for-elasticsearch-working-with-data
 ## client
 
 ```go
+package main
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"time"
+
+	"github.com/elastic/go-elasticsearch/v8"
+)
+
+var (
+	c *elasticsearch.Client
+)
+
 type Fruit struct {
-  Name  string `json:"name"`
-  Price int    `json:"price"`
+	Name  string `json:"name"`
+	Price int    `json:"price"`
 }
 
 func main() {
-  conf := elasticsearch.Config{
-    Addresses: []string{
-      "http://localhost:9200",
-    },
-    Username: "admin",
-    Password: "1234",
-  }
-  c, err := elasticsearch.NewClient(conf)
-  if err != nil {
-    panic(err)
-  }
+	c = Connect()
 
-  c.Indices.Create("fruit")
+	err := CreateIndex(context.Background())
+	if err != nil {
+		panic(err)
+	}
 
-  fruit := Fruit{
-    Name:  "apple",
-    Price: 15,
-  }
-  data, err := json.Marshal(fruit)
-  if err != nil {
-    panic(err)
-  }
-  c.Index("fruit", bytes.NewReader(data))
+	fruit := Fruit{
+		Name:  "apple",
+		Price: 15,
+	}
+
+	Insert(context.Background(), fruit)
 }
-```
 
-## esapi
+func Connect() *elasticsearch.Client {
+	conf := elasticsearch.Config{
+		Addresses: []string{
+			"http://localhost:9200",
+		},
+		Username: "admin",
+		Password: "1234",
+	}
+	c, err := elasticsearch.NewClient(conf)
+	if err != nil {
+		fmt.Println("🔴 Failed to NewClient")
+		panic(err)
+	}
+	api := c.Ping
+	res, err := api(
+		api.WithContext(context.Background()),
+	)
+	if err != nil {
+		fmt.Println("🔴 Failed to Ping, client error")
+		panic(err)
+	}
+	if res.IsError() {
+		fmt.Println("🔴 Failed to Ping, Elasticsearch error")
+		panic(err)
+	}
+	return c
+}
 
-```go
+func CreateIndex(ctx context.Context) error {
+	api := c.Indices.Create
+	res, err := api(
+		"fruit",
+		api.WithContext(context.Background()),
+		api.WithTimeout(5*time.Second),
+	)
+	if err != nil {
+		fmt.Println("🔴 Failed to Create, client error")
+		return err
+	}
+	defer res.Body.Close()
+	if res.IsError() {
+		fmt.Println("🔴 Failed to Create, Elasticsearch error")
+		return err
+	}
+	b, err := io.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
+	fmt.Println("🟢 Succeeded to Create", string(b))
+	return nil
+}
 
+func Insert(ctx context.Context, doc Fruit) error {
+	data, err := json.Marshal(doc)
+	if err != nil {
+		return err
+	}
+	api := c.Index
+	res, err := api(
+		"fruit",
+		bytes.NewReader(data),
+		api.WithContext(context.Background()),
+		api.WithTimeout(5*time.Second),
+	)
+	if err != nil {
+		fmt.Println("🔴 Failed to Index, client error")
+		return err
+	}
+	defer res.Body.Close()
+	if res.IsError() {
+		fmt.Println("🔴 Failed to Index, Elasticsearch error")
+		return err
+	}
+	b, err := io.ReadAll(res.Body)
+	if err != nil {
+		return err
+	}
+	fmt.Println("🟢 Succeeded to Index", string(b))
+	return nil
+}
 ```
