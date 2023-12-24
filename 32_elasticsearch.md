@@ -36,22 +36,22 @@ type Fruit struct {
 ```
 
 ```go
-func main() {
-  c = Connect()
+c = Connect()
 
-  err := CreateIndex(context.Background())
-  if err != nil {
-    panic(err)
-  }
-
-  fruit := Fruit{
-    Name:  "apple",
-    Price: 15,
-  }
-
-  Insert(context.Background(), fruit)
+err := CreateIndex(context.Background())
+if err != nil {
+  panic(err)
 }
 
+fruit := Fruit{
+  Name:  "apple",
+  Price: 15,
+}
+
+Insert(context.Background(), fruit)
+```
+
+```go
 func Connect() *elasticsearch.Client {
   conf := elasticsearch.Config{
     Addresses: []string{
@@ -79,7 +79,9 @@ func Connect() *elasticsearch.Client {
   }
   return c
 }
+```
 
+```go
 func CreateIndex(ctx context.Context) error {
   api := c.Indices.Create
   res, err := api(
@@ -103,7 +105,9 @@ func CreateIndex(ctx context.Context) error {
   fmt.Println("🟢 Succeeded to Create", string(b))
   return nil
 }
+```
 
+```go
 func Insert(ctx context.Context, doc Fruit) error {
   data, err := json.Marshal(doc)
   if err != nil {
