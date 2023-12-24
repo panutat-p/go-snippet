@@ -61,10 +61,10 @@ func Connect() *elasticsearch.Client {
 ```
 
 ```go
-func CreateIndex(ctx context.Context) error {
+func CreateIndex(ctx context.Context, index string) error {
   api := c.Indices.Create
   res, err := api(
-    "fruit",
+    index,
     api.WithContext(context.Background()),
     api.WithTimeout(5*time.Second),
   )
@@ -84,17 +84,18 @@ func CreateIndex(ctx context.Context) error {
   fmt.Println("🟢 Succeeded to Create", string(b))
   return nil
 }
+
 ```
 
 ```go
-func Insert(ctx context.Context, doc any) error {
+func Insert(ctx context.Context, index string, doc any) error {
   data, err := json.Marshal(doc)
   if err != nil {
     return err
   }
   api := c.Index
   res, err := api(
-    "fruit",
+    index,
     bytes.NewReader(data),
     api.WithContext(context.Background()),
     api.WithTimeout(5*time.Second),
