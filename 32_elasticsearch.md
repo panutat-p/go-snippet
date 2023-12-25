@@ -25,13 +25,7 @@ https://www.elastic.co/blog/the-go-client-for-elasticsearch-working-with-data
 ## client
 
 ```go
-var (
-  c *elasticsearch.Client
-)
-```
-
-```go
-func Connect() *elasticsearch.Client {
+func NewElasticsearchClient() *elasticsearch.Client {
   conf := elasticsearch.Config{
     Addresses: []string{
       "http://localhost:9200",
@@ -41,7 +35,6 @@ func Connect() *elasticsearch.Client {
   }
   c, err := elasticsearch.NewClient(conf)
   if err != nil {
-    fmt.Println("🔴 Failed to NewClient")
     panic(err)
   }
   api := c.Ping
@@ -49,11 +42,9 @@ func Connect() *elasticsearch.Client {
     api.WithContext(context.Background()),
   )
   if err != nil {
-    fmt.Println("🔴 Failed to Ping, client error")
     panic(err)
   }
   if res.IsError() {
-    fmt.Println("🔴 Failed to Ping, Elasticsearch error")
     panic(err)
   }
   return c
@@ -61,6 +52,8 @@ func Connect() *elasticsearch.Client {
 ```
 
 ```go
+var c *elasticsearch.Client
+
 func CreateIndex(ctx context.Context, index string) error {
   api := c.Indices.Create
   res, err := api(
@@ -69,25 +62,23 @@ func CreateIndex(ctx context.Context, index string) error {
     api.WithTimeout(5*time.Second),
   )
   if err != nil {
-    fmt.Println("🔴 Failed to Create, client error")
     return err
   }
   defer res.Body.Close()
   if res.IsError() {
-    fmt.Println("🔴 Failed to Create, Elasticsearch error")
     return err
   }
   b, err := io.ReadAll(res.Body)
   if err != nil {
     return err
   }
-  fmt.Println("🟢 Succeeded to Create", string(b))
   return nil
 }
-
 ```
 
 ```go
+var c *elasticsearch.Client
+
 func Insert(ctx context.Context, index string, doc any) error {
   data, err := json.Marshal(doc)
   if err != nil {
@@ -101,19 +92,12 @@ func Insert(ctx context.Context, index string, doc any) error {
     api.WithTimeout(5*time.Second),
   )
   if err != nil {
-    fmt.Println("🔴 Failed to Index, client error")
     return err
   }
   defer res.Body.Close()
   if res.IsError() {
-    fmt.Println("🔴 Failed to Index, Elasticsearch error")
     return err
   }
-  b, err := io.ReadAll(res.Body)
-  if err != nil {
-    return err
-  }
-  fmt.Println("🟢 Succeeded to Index", string(b))
   return nil
 }
 ```
