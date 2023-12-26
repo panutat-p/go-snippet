@@ -15,7 +15,7 @@ func main() {
 func Recover() {
  r := recover()
  if r != nil {
-  fmt.Println("Panic recovered, err:", r)
+  fmt.Println("Panic recovered, r:", r)
  }
 }
 
