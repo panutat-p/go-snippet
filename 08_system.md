@@ -28,13 +28,13 @@ name := os.Getenv("APP_NAME")
 fmt.Println(name)
 ```
 
-## Signals
+## syscall
 
 ```go
 import (
-  "os"
-  "os/signal"
-  "syscall"
+    "os"
+    "os/signal"
+    "syscall"
 )
 ```
 
