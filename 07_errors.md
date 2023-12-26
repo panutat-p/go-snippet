@@ -2,8 +2,9 @@
 
 ## Panic & Recover
 
-* Recover is only useful inside deferred functions
-* During normal execution, a call to recover will return nil and have no other effect
+* `recover` is a built-in function that regains control of a panicking Go routine
+* ⚠️ `recover` needs to be called in the same Go routine where the panic occurred
+* `recover` is only useful inside deferred functions
 
 ```go
 func main() {
