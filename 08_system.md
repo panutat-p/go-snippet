@@ -42,20 +42,20 @@ Graceful shutdown for a server
 
 ```go
 func main() {
-  var stop = make(chan os.Signal, 1)
-  signal.Notify(
-    stop,
-    os.Interrupt,
-    syscall.SIGINT,
-    syscall.SIGTERM,
-  )
-  go StartServer()
-  <-stop
-  fmt.Println("🟡 Gracefully shutting down")
+    var stop = make(chan os.Signal, 1)
+    signal.Notify(
+        stop,
+        os.Interrupt,
+        syscall.SIGINT,
+        syscall.SIGTERM,
+    )
+    go StartServer()
+    <-stop
+    fmt.Println("🟡 Gracefully shutting down")
 }
 
 func StartServer() {
-  time.Sleep(1<<63 - 1)
+    time.Sleep(1<<63 - 1)
 }
 ```
 
