@@ -1,4 +1,4 @@
-# errros
+# error
 
 ## Panic & Recover
 
@@ -8,24 +8,24 @@
 
 ```go
 func main() {
- defer Recover()
- Run()
+    defer Recover()
+    Run()
 }
 
 func Recover() {
- r := recover()
- if r != nil {
-  fmt.Println("Panic recovered, r:", r)
- }
+    r := recover()
+    if r != nil {
+        fmt.Println("Panic recovered, r:", r)
+    }
 }
 
 func Run() {
- err := errors.New("app")
- panic(err)
+    err := errors.New("app")
+    panic(err)
 }
 ```
 
-## Error wrapping
+## errors
 
 https://pkg.go.dev/errors
 
@@ -34,37 +34,36 @@ https://tip.golang.org/doc/go1.20#errors
 * Wrapping also preserves the original error
   * which means `errors.Is` and `errors.As` continue to work
   * regardless of how many times an error has been wrapped
-
 * ⚠️ `errors.Unwrap` does not work with `errors.Join`
 
 ```go
 var (
-  ErrHTTP = errors.New("http")
+    ErrHTTP = errors.New("http")
 )
 
 func main() {
-  err := GetExample()
-  if err != nil {
-    if errors.Is(err, ErrHTTP) {
-      fmt.Println("🟡 Failed to make a request")
-      fmt.Println(err)
+    err := GetExample()
+    if err != nil {
+        if errors.Is(err, ErrHTTP) {
+            fmt.Println("🟡 Failed to make a request")
+            fmt.Println(err)
+        }
     } else {
-      fmt.Println("🔴 Unexpected error")
-      panic(err)
+        fmt.Println("🔴 Unexpected error")
+        panic(err)
     }
-  }
 }
 
 func GetExample() error {
     _, err := http.Get("https://example.invalid")
-  if err != nil {
-    return errors.Join(ErrHTTP, err)
-  }
-  return nil
+    if err != nil {
+        return errors.Join(ErrHTTP, err)
+    }
+    return nil
 }
 ```
 
-## Error unwrapping
+## fmt.Errorf
 
 https://earthly.dev/blog/golang-errors
 
@@ -85,8 +84,8 @@ fmt.Println(errors.Unwrap(wrappedErr))
 var pathError *fs.PathError
 _, err := os.Open("non-existing")
 if errors.As(err, &pathError) {
-  fmt.Println("err:", err)
-  fmt.Println("pathError:", pathError)
-  // err and pathError are the same instance
+    fmt.Println("err:", err)
+    fmt.Println("pathError:", pathError)
+    // err and pathError now have the same value
 }
 ```
