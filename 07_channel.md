@@ -1,9 +1,9 @@
 # Channel
 
-## Preemption
+## Preemptive vs Cooperative
 > Preemption refers to the ability of the Go runtime scheduler to interrupt a running goroutine and switch the execution to a different goroutine.
 
-> Go's goroutine scheduler is not preemptive in the traditional sense.
+> Go routines are managed by the Go runtime's scheduler, this scheduler is not preemptive in the traditional sense.
 > Go's scheduler is cooperative, meaning it only checks whether it should switch goroutines at certain points in the program,
 > such as function calls, channel operations, and blocking system calls.
 
