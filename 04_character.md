@@ -14,26 +14,26 @@ fmt.Println(sl)
 
 ```go
 for _, e := range "hello world" {
-	fmt.Println(e, string(e))
+    fmt.Println(e, string(e))
 }
 ```
 
 ```go
 // INT convert '0' to 0, '1' to 1, ...
 func INT(r rune) int {
-	return int(r - '0')
+    return int(r - '0')
 }
 ```
 
 ```go
 if unicode.IsLetter('A') {
-	fmt.Println("🟢", 'A')
+    fmt.Println("🟢", 'A')
 }
 ```
 
 ```go
 if unicode.IsDigit('3') {
-	fmt.Println("🟢", '3')
+    fmt.Println("🟢", '3')
 }
 ```
 
@@ -53,11 +53,11 @@ fmt.Println(sl)
 
 ```go
 func Reverse(s string) string {
-	sl := []rune(s)
-	var ret []rune
-	for i := len(sl) - 1; i > -1; i -= 1 {
-		ret = append(ret, sl[i])
-	}
-	return string(ret)
+    sl := []rune(s)
+    var ret []rune
+    for i := len(sl) - 1; i > -1; i -= 1 {
+        ret = append(ret, sl[i])
+    }
+    return string(ret)
 }
 ```
