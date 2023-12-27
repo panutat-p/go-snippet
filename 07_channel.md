@@ -36,8 +36,8 @@ func main() {
     }()
 
     // Read from the channel until it's closed
-    for i := range ch {
-        fmt.Println(i)
+    for v := range ch {
+        fmt.Println(v)
     }
 }
 ```
