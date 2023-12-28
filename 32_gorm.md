@@ -1,17 +1,32 @@
 # Gorm
 
+https://gorm.io
+
+```shell
+go get gorm.io/gorm
+```
+
+```go
+import (
+    "database/sql"
+    
+    "gorm.io/driver/mysql"
+    "gorm.io/gorm"
+)
+```
+
 ## Model
 
 ```go
 type Fruit struct {
-	ID    uint64 `gorm:"column:id"`
-	Name  string `gorm:"column:name"`
-	Price int    `gorm:"price"`
-	Tags  string `gorm:"tags"`
+    ID    uint64 `gorm:"column:id"`
+    Name  string `gorm:"column:name"`
+    Price int    `gorm:"price"`
+    Tags  string `gorm:"tags"`
 }
 
 func (f *Fruit) TableName() string {
-	return "fruits"
+    return "fruits"
 }
 ```
 
