@@ -18,14 +18,14 @@ func (f *Fruit) TableName() string {
 ## Connect
 
 ```go
-func Connect() (*gorm.DB, *sql.DB) {
+func Connect(host, port, username, password, dbName string) (*gorm.DB, *sql.DB) {
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?parseTime=True&charset=utf8",
-		"admin",
-		"1234",
-		"localhost",
-		"3306",
-		"example",
+		username,
+		password,
+		host,
+		port,
+		dbName,
 	)
 	g, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
