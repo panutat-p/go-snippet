@@ -52,5 +52,45 @@ func Fetch(url string) error {
 ### Promise.All
 
 ```go
+func main() {
+    urls := []string{
+        "https://example.com",
+        "https://google.com",
+        "https://cloudflare.com",
+        "_",
+        "hello",
+        "http://not-exist.com",
+        "https://not-exist.com",
+    }
 
+    g, ctx := errgroup.WithContext(context.Background())
+
+    for _, url := range urls {
+        url := url
+        select {
+        case <-ctx.Done():
+            return
+        default:
+            g.Go(func() error {
+                return Fetch(url)
+            })
+        }
+    }
+
+    err := g.Wait()
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println("✅ Done")
+}
+
+func Fetch(url string) error {
+    _, err := http.Get(url)
+    if err != nil {
+        fmt.Println("🔴 Failed to GET", url)
+        return err
+    }
+    fmt.Println("🟢 Succeeded to GET", url)
+    return nil
+}
 ```
