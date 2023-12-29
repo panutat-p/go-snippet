@@ -34,24 +34,24 @@ func (f *Fruit) TableName() string {
 
 ```go
 func Connect(host, port, username, password, dbName string) (*gorm.DB, *sql.DB) {
-	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s?parseTime=True&charset=utf8",
-		username,
-		password,
-		host,
-		port,
-		dbName,
-	)
-	g, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
-		SkipDefaultTransaction: true,
-	})
-	if err != nil {
-		panic(err)
-	}
-	db, err := g.DB()
-	if err != nil {
-		panic(err)
-	}
-	return g, db
+    dsn := fmt.Sprintf(
+        "%s:%s@tcp(%s:%s)/%s?parseTime=True&charset=utf8",
+        username,
+        password,
+        host,
+        port,
+        dbName,
+    )
+    g, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+        SkipDefaultTransaction: true,
+    })
+    if err != nil {
+        panic(err)
+    }
+    db, err := g.DB()
+    if err != nil {
+        panic(err)
+    }
+    return g, db
 }
 ```
