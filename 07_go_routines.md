@@ -8,7 +8,7 @@ https://pkg.go.dev/golang.org/x/sync/errgroup
 go get golang.org/x/sync/errgroup
 ```
 
-### Simple
+### No stop
 
 ```go
 func main() {
@@ -49,7 +49,9 @@ func Fetch(url string) error {
 }
 ```
 
-### Promise.All
+### Stop when error
+
+* Behave like `Promise.all` in JavaScript
 
 ```go
 func main() {
@@ -93,4 +95,12 @@ func Fetch(url string) error {
     fmt.Println("🟢 Succeeded to GET", url)
     return nil
 }
+```
+
+## Stop and cancel when error
+
+* Behave like `AbortController` & `AbortSignal` in JavaScript
+
+```go
+
 ```
