@@ -30,11 +30,7 @@ func PrintDigit(num int) {
 
 ## nil
 
-* Billion dollar mistake?
-
-https://www.reddit.com/r/golang/comments/18sncxt/go_nil_panic_and_the_billion_dollar_mistake
-
-https://www.reddit.com/r/golang/comments/18sncxt/comment/kf91p7t/?utm_source=share&utm_medium=web2x&context=3
+[Billion dollar mistake?](https://www.reddit.com/r/golang/comments/18sncxt/go_nil_panic_and_the_billion_dollar_mistake)
 
 https://github.com/uber-go/nilaway
 
