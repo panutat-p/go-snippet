@@ -27,3 +27,32 @@ func PrintDigit(num int) {
     }
 }
 ```
+
+## nil
+
+* Billion dollar mistake?
+
+https://www.reddit.com/r/golang/comments/18sncxt/go_nil_panic_and_the_billion_dollar_mistake
+
+https://www.reddit.com/r/golang/comments/18sncxt/comment/kf91p7t/?utm_source=share&utm_medium=web2x&context=3
+
+https://github.com/uber-go/nilaway
+
+## Auto zero values
+
+* Go: init as zero value
+* Kotlin: compilation error
+* Rust: compilation error
+* JavaScript: init as `undefined`
+
+```go
+type Profile struct {
+    uuid uuid.UUID
+    name string
+}
+
+s := Profile {
+    // Oops, forgot my `uuid`, it's now `0`, so it's not really unique, is it?
+    name: "My name",
+}
+```
