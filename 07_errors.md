@@ -6,6 +6,7 @@
 * ⚠️ `recover` needs to be called in the same Go routine where the panic occurred
 * `recover` is only useful inside deferred functions
 * [Adding a recovery to main also doesn't work. If one goroutine panics, it will kill ALL goroutines](https://www.reddit.com/r/golang/comments/18sncxt/comment/kf8s38n/?utm_source=share&utm_medium=web2x&context=3)
+* [unhandled panic bringing the entire app down](https://www.reddit.com/r/golang/comments/18sncxt/comment/kf91p7t/?utm_source=share&utm_medium=web2x&context=3)
 
 ```go
 func main() {
