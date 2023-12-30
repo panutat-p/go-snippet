@@ -32,7 +32,13 @@ func PrintDigit(num int) {
 
 [Billion dollar mistake?](https://www.reddit.com/r/golang/comments/18sncxt/go_nil_panic_and_the_billion_dollar_mistake)
 
+### nilaway
+
 https://github.com/uber-go/nilaway
+
+```shell
+go install go.uber.org/nilaway/cmd/nilaway@latest
+```
 
 ## Auto zero values
 
