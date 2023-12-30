@@ -150,3 +150,72 @@ func Fetch(ctx context.Context, url string) error {
     return nil
 }
 ```
+
+## waitgroup + errgroup
+
+* Expect: `apple` `amazon` `reddit` are success
+* Expect: `hello` will fail but `cloudflare` `example` `googlre` will be stopped
+
+```go
+func main() {
+    var (
+        wg = &sync.WaitGroup{}
+        input1 = []string{
+            "https://apple.com",
+            "https://reddit.com",
+            "https://amazon.com",
+        }
+        input2 = []string{
+            "hello",
+            "https://example.com",
+            "https://google.com",
+            "https://cloudflare.com",
+        }
+    )
+
+    wg.Add(2)
+
+    go Run(wg, input1)
+    go Run(wg, input2)
+
+    wg.Wait()
+}
+
+func Run(wg *sync.WaitGroup, urls []string) {
+    defer wg.Done()
+    ctx := context.Background()
+    g, ctx := errgroup.WithContext(ctx)
+
+    for _, url := range urls {
+        url := url
+        select {
+        case <-ctx.Done():
+            return
+        default:
+            g.Go(func() error {
+                return Fetch(ctx, url)
+            })
+        }
+    }
+
+    err := g.Wait()
+    if err != nil {
+        fmt.Println(err)
+    }
+}
+
+func Fetch(ctx context.Context, url string) error {
+    req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+    if err != nil {
+        fmt.Println("🔴 Failed to create request for", url)
+        return err
+    }
+    _, err = http.DefaultClient.Do(req)
+    if err != nil {
+        fmt.Println("🔴 Failed to GET", url)
+        return err
+    }
+    fmt.Println("🟢 Succeeded to GET", url)
+    return nil
+}
+```
