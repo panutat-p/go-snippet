@@ -154,7 +154,7 @@ func Fetch(ctx context.Context, url string) error {
 ## waitgroup + errgroup
 
 * Expect: `apple` `amazon` `reddit` are success
-* Expect: `hello` will fail but `cloudflare` `example` `googlre` will be stopped
+* Expect: `hello` will fail then `cloudflare` `example` `googlre` will be stopped
 
 ```go
 func main() {
