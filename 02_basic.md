@@ -46,6 +46,7 @@ go install go.uber.org/nilaway/cmd/nilaway@latest
 * Kotlin: compilation error
 * Rust: compilation error
 * JavaScript: init as `undefined`
+* [The zero value design of Go was pretty intriguing](https://www.reddit.com/r/golang/comments/18sncxt/comment/kf9dha8/?utm_source=share&utm_medium=web2x&context=3)
 
 ```go
 type Profile struct {
