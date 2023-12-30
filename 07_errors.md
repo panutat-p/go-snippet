@@ -5,6 +5,7 @@
 * `recover` is a built-in function that regains control of a panicking Go routine
 * ⚠️ `recover` needs to be called in the same Go routine where the panic occurred
 * `recover` is only useful inside deferred functions
+* https://www.reddit.com/r/golang/comments/18sncxt/comment/kf8s38n/?utm_source=share&utm_medium=web2x&context=3
 
 ```go
 func main() {
