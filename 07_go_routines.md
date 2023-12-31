@@ -52,20 +52,43 @@ func Fetch(url string) error {
 ### Stop when error
 
 * Behave like `Promise.all` in JavaScript
+* Expected: `apple` `amazon` `reddit` will success
+* Expected: `hello` will fail but `cloudflare` `example` `google` will success
 
 ```go
 func main() {
-    urls := []string{
-        "https://example.com",
-        "https://google.com",
-        "https://cloudflare.com",
-        "_",
-        "hello",
-        "http://not-exist.com",
-        "https://not-exist.com",
-    }
+    var wg = sync.WaitGroup{}
+    wg.Add(2)
 
-    g, ctx := errgroup.WithContext(context.Background())
+    go Run(
+        context.WithValue(
+            context.Background(), "id", "🦊"),
+        &wg,
+        []string{
+            "https://apple.com",
+            "https://reddit.com",
+            "https://amazon.com",
+        },
+    )
+    go Run(
+        context.WithValue(context.Background(), "id", "🐵"),
+        &wg,
+        []string{
+            "hello",
+            "https://example.com",
+            "https://google.com",
+            "https://cloudflare.com",
+        },
+    )
+
+    wg.Wait()
+}
+
+func Run(ctx context.Context, wg *sync.WaitGroup, urls []string) {
+    id := ctx.Value("id")
+    fmt.Println(id, "started")
+    defer wg.Done()
+    g, ctx := errgroup.WithContext(ctx)
 
     for _, url := range urls {
         url := url
@@ -74,25 +97,27 @@ func main() {
             return
         default:
             g.Go(func() error {
-                return Fetch(url)
+                return Fetch(ctx, url)
             })
         }
     }
 
     err := g.Wait()
     if err != nil {
-        panic(err)
+        fmt.Println(id, "❌", err)
+        return
     }
-    fmt.Println("✅ Done")
+    fmt.Println(id, "✅")
 }
 
-func Fetch(url string) error {
+func Fetch(ctx context.Context, url string) error {
+    id := ctx.Value("id")
     _, err := http.Get(url)
     if err != nil {
-        fmt.Println("🔴 Failed to GET", url)
+        fmt.Println(id, "failed to GET", url)
         return err
     }
-    fmt.Println("🟢 Succeeded to GET", url)
+    fmt.Println(id, "succeeded to GET", url)
     return nil
 }
 ```
@@ -101,8 +126,8 @@ func Fetch(url string) error {
 
 * Behave like `AbortController` & `AbortSignal` in JavaScript
 * It will cancel all other ongoing operations when one operation returns an error
-* Expected: `apple` `amazon` `reddit` are success
-* Expected: `hello` will fail then `cloudflare` `example` `googlre` will be stopped
+* Expected: `apple` `amazon` `reddit` will success
+* Expected: `hello` will fail then `cloudflare` `example` `google` will be stopped
 
 ```go
 func main() {
