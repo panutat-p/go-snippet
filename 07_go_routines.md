@@ -158,13 +158,13 @@ func Fetch(ctx context.Context, url string) error {
 
 ```go
 func main() {
-    var wg = &sync.WaitGroup{}
+    var wg = sync.WaitGroup{}
     wg.Add(2)
 
     go Run(
         context.WithValue(
             context.Background(), "id", "🦊"),
-        wg,
+        &wg,
         []string{
             "https://apple.com",
             "https://reddit.com",
@@ -173,7 +173,7 @@ func main() {
     )
     go Run(
         context.WithValue(context.Background(), "id", "🐵"),
-        wg,
+        &wg,
         []string{
             "hello",
             "https://example.com",
