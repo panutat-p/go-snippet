@@ -166,14 +166,9 @@ func Run(ctx context.Context, wg *sync.WaitGroup, urls []string) {
 
     for _, url := range urls {
         url := url
-        select {
-        case <-ctx.Done():
-            return
-        default:
-            g.Go(func() error {
-                return Fetch(ctx, url)
-            })
-        }
+        g.Go(func() error {
+            return Fetch(ctx, url)
+        })
     }
 
     err := g.Wait()
