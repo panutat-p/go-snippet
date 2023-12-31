@@ -129,7 +129,12 @@ func Run(ctx context.Context, wg *sync.WaitGroup, urls []string) {
             return
         default:
             g.Go(func() error {
-                return Fetch(ctx, cancel, url)
+                err := Fetch(ctx, url)
+                if err != nil {
+                    cancel()
+                    return err
+                }
+                return nil
             })
         }
     }
@@ -142,12 +147,11 @@ func Run(ctx context.Context, wg *sync.WaitGroup, urls []string) {
     fmt.Println(id, "✅")
 }
 
-func Fetch(ctx context.Context, cancel context.CancelFunc, url string) error {
+func Fetch(ctx context.Context, url string) error {
     id := ctx.Value("id")
     _, err := http.DefaultClient.Get(url)
     if err != nil {
         fmt.Println(id, "failed to GET", url)
-        cancel()
         return err
     }
     fmt.Println(id, "succeeded to GET", url)
