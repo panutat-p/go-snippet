@@ -76,14 +76,83 @@ func Fetch(ctx context.Context, url string) error {
 
 ```
 
-### Stop creating new Go routines when error
+### Stop but not cancel
 
-* Behave like `Promise.all` in JavaScript
+* Behave like `Promise.all` in JavaScript but `errgroup.Group` waits for all goroutines to complete before it returns, even if one of them has returned an error.
 * Expected: `apple` `amazon` `reddit` will success
-* Expected: `hello` will fail but `cloudflare` `example` `google` will success
+* Expected: `hello` will fail then `cloudflare` `example` `google` will not be created
 
 ```go
+func main() {
+    var wg = sync.WaitGroup{}
+    wg.Add(2)
 
+    go Run(
+        context.WithValue(
+            context.Background(), "id", "🦊"),
+        &wg,
+        []string{
+            "https://apple.com",
+            "https://reddit.com",
+            "https://amazon.com",
+        },
+    )
+    go Run(
+        context.WithValue(context.Background(), "id", "🐵"),
+        &wg,
+        []string{
+            "hello",
+            "https://example.com",
+            "https://google.com",
+            "https://cloudflare.com",
+        },
+    )
+
+    wg.Wait()
+}
+
+func Run(ctx context.Context, wg *sync.WaitGroup, urls []string) {
+    defer wg.Done()
+    id := ctx.Value("id")
+    fmt.Println(id, "started")
+
+    ctx, cancel := context.WithCancel(ctx)
+    defer cancel()
+    var g errgroup.Group
+
+    for _, url := range urls {
+        time.Sleep(1 * time.Second) // remove cooperative behavior
+        url := url
+        select {
+        case <-ctx.Done():
+            fmt.Println(id, "⚠️ context cancelled")
+            return
+        default:
+            g.Go(func() error {
+                return Fetch(ctx, cancel, url)
+            })
+        }
+    }
+
+    err := g.Wait()
+    if err != nil {
+        fmt.Println(id, "❌", err)
+        return
+    }
+    fmt.Println(id, "✅")
+}
+
+func Fetch(ctx context.Context, cancel context.CancelFunc, url string) error {
+    id := ctx.Value("id")
+    _, err := http.DefaultClient.Get(url)
+    if err != nil {
+        fmt.Println(id, "failed to GET", url)
+        cancel()
+        return err
+    }
+    fmt.Println(id, "succeeded to GET", url)
+    return nil
+}
 ```
 
 ### Stop with context cancellation
