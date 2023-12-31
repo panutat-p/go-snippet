@@ -153,37 +153,42 @@ func Fetch(ctx context.Context, url string) error {
 
 ## waitgroup + errgroup
 
-* Expect: `apple` `amazon` `reddit` are success
-* Expect: `hello` will fail then `cloudflare` `example` `googlre` will be stopped
+* Expected: `apple` `amazon` `reddit` are success
+* Expected: `hello` will fail then `cloudflare` `example` `googlre` will be stopped
 
 ```go
 func main() {
-    var (
-        wg = &sync.WaitGroup{}
-        input1 = []string{
+    var wg = &sync.WaitGroup{}
+    wg.Add(2)
+
+    go Run(
+        context.WithValue(
+            context.Background(), "id", "🦊"),
+        wg,
+        []string{
             "https://apple.com",
             "https://reddit.com",
             "https://amazon.com",
-        }
-        input2 = []string{
+        },
+    )
+    go Run(
+        context.WithValue(context.Background(), "id", "🐵"),
+        wg,
+        []string{
             "hello",
             "https://example.com",
             "https://google.com",
             "https://cloudflare.com",
-        }
+        },
     )
-
-    wg.Add(2)
-
-    go Run(wg, input1)
-    go Run(wg, input2)
 
     wg.Wait()
 }
 
-func Run(wg *sync.WaitGroup, urls []string) {
+func Run(ctx context.Context, wg *sync.WaitGroup, urls []string) {
+    id := ctx.Value("id")
+    fmt.Println(id, "started")
     defer wg.Done()
-    ctx := context.Background()
     g, ctx := errgroup.WithContext(ctx)
 
     for _, url := range urls {
@@ -200,22 +205,25 @@ func Run(wg *sync.WaitGroup, urls []string) {
 
     err := g.Wait()
     if err != nil {
-        fmt.Println(err)
+        fmt.Println(id, "❌", err)
+        return
     }
+    fmt.Println(id, "✅")
 }
 
 func Fetch(ctx context.Context, url string) error {
+    id := ctx.Value("id")
     req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
     if err != nil {
-        fmt.Println("🔴 Failed to create request for", url)
+        fmt.Println(id, "failed to create request for", url)
         return err
     }
     _, err = http.DefaultClient.Do(req)
     if err != nil {
-        fmt.Println("🔴 Failed to GET", url)
+        fmt.Println(id, "failed to GET", url)
         return err
     }
-    fmt.Println("🟢 Succeeded to GET", url)
+    fmt.Println(id, "succeeded to GET", url)
     return nil
 }
 ```
