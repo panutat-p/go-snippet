@@ -85,9 +85,9 @@ func main() {
 }
 
 func Run(ctx context.Context, wg *sync.WaitGroup, urls []string) {
+    defer wg.Done()
     id := ctx.Value("id")
     fmt.Println(id, "started")
-    defer wg.Done()
     g, ctx := errgroup.WithContext(ctx)
 
     for _, url := range urls {
@@ -159,9 +159,9 @@ func main() {
 }
 
 func Run(ctx context.Context, wg *sync.WaitGroup, urls []string) {
+    defer wg.Done()
     id := ctx.Value("id")
     fmt.Println(id, "started")
-    defer wg.Done()
     g, ctx := errgroup.WithContext(ctx)
 
     for _, url := range urls {
