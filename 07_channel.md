@@ -1,5 +1,15 @@
 # Channel
 
+## Declare
+
+```go
+var ch = make(chan int)
+```
+
+```go
+var ch = make(chan int, 1)
+```
+
 ## Preemptive vs Cooperative
 > Preemption refers to the ability of the Go runtime scheduler to interrupt a running goroutine and switch the execution to a different goroutine.
 
