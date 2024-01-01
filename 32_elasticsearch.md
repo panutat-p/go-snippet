@@ -105,50 +105,40 @@ func Insert(ctx context.Context, index string, doc any) error {
 ## Bulk insert
 
 ```go
+import (
+    "github.com/dustin/go-humanize"
+    "github.com/elastic/go-elasticsearch/v8"
+    "github.com/elastic/go-elasticsearch/v8/esapi"
+)
+```
+
+```go
 var (
     count = 1000
     batch = 250
+
+    buf bytes.Buffer
+
+    indexName = "articles"
+
+    numItems   int
+    numErrors  int
+    numIndexed int
+    numBatches int
+    currBatch  int
 )
 
 func main() {
     log.SetFlags(0)
 
-    var (
-        buf bytes.Buffer
-        res *esapi.Response
-        raw map[string]interface{}
-        blk *bulkResponse
-
-        articles  []*Article
-        indexName = "articles"
-
-        numItems   int
-        numErrors  int
-        numIndexed int
-        numBatches int
-        currBatch  int
-    )
-
-    log.Printf("\x1b[1mBulk\x1b[0m: documents [%s] batch size [%s]",humanize.Comma(int64(count)), humanize.Comma(int64(batch)))
+    log.Printf("\x1b[1mBulk\x1b[0m: documents [%s] batch size [%s]", humanize.Comma(int64(count)), humanize.Comma(int64(batch)))
     log.Println(strings.Repeat("▁", 65))
 
     es := ConnectElasticsearch()
 
-    names := []string{"Alice", "John", "Mary"}
-    for i := 1; i < count+1; i++ {
-        articles = append(articles, &Article{
-            ID:        i,
-            Title:     strings.Join([]string{"Title", strconv.Itoa(i)}, " "),
-            Body:      "Lorem ipsum dolor sit amet...",
-            Published: time.Now().Round(time.Second).UTC().AddDate(0, 0, i),
-            Author: Author{
-                FirstName: names[rand.Intn(len(names))],
-                LastName:  "Smith",
-            },
-        })
-    }
-    log.Printf("→ Generated %s articles", humanize.Comma(int64(len(articles))))
-    fmt.Print("→ Sending batch ")
+    docs := GenerateDocs()
+
+    fmt.Print("🟢 Sending batch ")
 
     if count%batch == 0 {
         numBatches = (count / batch)
@@ -158,19 +148,15 @@ func main() {
 
     start := time.Now().UTC()
 
-    for i, a := range articles {
+    for i, doc := range docs {
         numItems++
-
         currBatch = i / batch
         if i == count-1 {
             currBatch++
         }
 
-        meta := []byte(fmt.Sprintf(`{ "index" : { "_id" : "%d" } }%s`, a.ID, "\n"))
-        data, err := json.Marshal(a)
-        if err != nil {
-            log.Fatalf("Cannot encode article %d: %s", a.ID, err)
-        }
+        meta := []byte(fmt.Sprintf(`{ "index" : { "_id" : "%d" } }%s`, doc.ID, "\n"))
+        data, _ := json.Marshal(doc)
         data = append(data, "\n"...)
         buf.Grow(len(meta) + len(data))
         buf.Write(meta)
@@ -178,19 +164,23 @@ func main() {
 
         if i > 0 && i%batch == 0 || i == count-1 {
             fmt.Printf("[%d/%d] ", currBatch, numBatches)
+            var res *esapi.Response
             res, _ = es.Bulk(bytes.NewReader(buf.Bytes()), es.Bulk.WithIndex(indexName))
-            if res.IsError() {
+            switch res.IsError() {
+            case true:
                 numErrors += numItems
+                var raw map[string]any
                 _ = json.NewDecoder(res.Body).Decode(&raw)
-                log.Printf("  Error: [%d] %s: %s", res.StatusCode, raw["error"].(map[string]any)["type"], raw["error"].(map[string]any)["reason"])
-            } else {
+                log.Printf("🔴 [%d] %s: %s", res.StatusCode, raw["error"].(map[string]any)["type"], raw["error"].(map[string]any)["reason"])
+            case false:
+                var blk *bulkResponse
                 _ = json.NewDecoder(res.Body).Decode(&blk)
                 for _, d := range blk.Items {
                     if d.Index.Status > 201 {
                         numErrors++ // status_code > 200 is error
-                        log.Printf("Error: [%d]: %s: %s: %s: %s", d.Index.Status, d.Index.Error.Type, d.Index.Error.Reason, d.Index.Error.Cause.Type, d.Index.Error.Cause.Reason)
+                        log.Printf("🔴 [%d]: %s: %s: %s: %s", d.Index.Status, d.Index.Error.Type, d.Index.Error.Reason, d.Index.Error.Cause.Type, d.Index.Error.Cause.Reason)
                     } else {
-                        numIndexed++ // status_code = 200 is success
+                        numIndexed++
                     }
                 }
             }
@@ -214,10 +204,29 @@ func main() {
     }
 }
 
-func ConnectElasticsearch() *elasticsearch.Client{
+func GenerateDocs() []*Article {
+    var articles []*Article
+    names := []string{"Alice", "John", "Mary"}
+    for i := 1; i < count+1; i++ {
+        articles = append(articles, &Article{
+            ID:        i,
+            Title:     strings.Join([]string{"Title", strconv.Itoa(i)}, " "),
+            Body:      "Lorem ipsum dolor sit amet...",
+            Published: time.Now().Round(time.Second).UTC().AddDate(0, 0, i),
+            Author: Author{
+                FirstName: names[rand.Intn(len(names))],
+                LastName:  "Smith",
+            },
+        })
+    }
+    log.Printf("→ Generated %s articles", humanize.Comma(int64(len(articles))))
+    return articles
+}
+
+func ConnectElasticsearch() *elasticsearch.Client {
     es, err := elasticsearch.NewDefaultClient()
     if err != nil {
-        log.Fatalf("Error creating the client: %s", err)
+        log.Fatalf("🔴 Failed to NewDefaultClient: %s", err)
     }
     return es
 }
