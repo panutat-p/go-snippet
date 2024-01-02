@@ -12,3 +12,14 @@ rand.Seed(time.Now().UnixNano())
 n := rand.Intn(100)
 fmt.Println(n)
 ```
+
+```go
+func RandString(n int) string {
+    var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    b := make([]rune, n)
+    for i := range b {
+        b[i] = letterRunes[rand.Intn(len(letterRunes))]
+    }
+    return string(b)
+}
+```
