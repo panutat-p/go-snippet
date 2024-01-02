@@ -120,7 +120,7 @@ Get current directory
 ```go
 dir, err := os.Getwd()
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println("Current directory:", dir)
 dirName := filepath.Base(dir)
@@ -133,9 +133,9 @@ Check directory exist
 ```go
 _, err := os.Stat("/root/go")
 if os.IsNotExist(err) {
-  fmt.Println("Directory does not exist")
+    fmt.Println("Directory does not exist")
 } else {
-  fmt.Println("Directory exists")
+    fmt.Println("Directory exists")
 }
 ```
 
@@ -143,10 +143,10 @@ List all files in the directory including dot
 ```go
 files, err := os.ReadDir("/root")
 if err != nil {
-  panic(err)
+    panic(err)
 }
 for _, file := range files {
-  fmt.Println(file.Name())
+    fmt.Println(file.Name())
 }
 ```
 
@@ -160,7 +160,7 @@ Creates a directory
 ```go
 err := os.Mkdir("app", 0755)
 if err != nil {
-  panic(err)
+    panic(err)
 }
 ```
 
@@ -168,6 +168,6 @@ Creates a directory and all necessary parent directories if they do not exist
 ```go
 err := os.MkdirAll("app/v1", 0755)
 if err != nil {
-  panic(err)
+    panic(err)
 }
 ```
