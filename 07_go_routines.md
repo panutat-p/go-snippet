@@ -162,9 +162,9 @@ func Fetch(ctx context.Context, url string) error {
 ### Stop with context cancellation
 
 * Behave like `AbortController` & `AbortSignal` in JavaScript
-* It will cancel all other ongoing operations when one operation returns an error
-* Expected: `apple` `amazon` `reddit` will success
-* Expected: `hello` will fail then `cloudflare` `example` `google` will be stopped
+* When a routine return an error, `errgroup` will cancel the cantext
+* The running routines may exit or not, depending on whether they respect the context or not
+* For example, `io` does not respect the context, but `net/http` does
 
 ```go
 func main() {
