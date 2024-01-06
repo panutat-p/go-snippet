@@ -5,11 +5,25 @@ https://pkg.go.dev/time
 ```go
 import "time"
 ```
+
+## Sleep with context
+
+```go
+func Sleep(ctx context.Context, n int) {
+    select {
+    case <-time.After(time.Duration(n) * time.Second):
+    case <-ctx.Done():
+        fmt.Println("Sleep cancelled")
+        return
+    }
+}
+```
+
 ## Go DateTime
 ```go
 t1, err := time.Parse(time.DateTime, "2023-01-01 17:00:00") // 2 Jan 2006 15:04:05
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println("🟢 t1:", t1, t1.Unix())
 ```
@@ -18,7 +32,7 @@ fmt.Println("🟢 t1:", t1, t1.Unix())
 ```go
 t1, err := time.Parse(time.Layout, "01/02 03:04:05PM '06 -0700")
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println("🟢 t1:", t1, t1.Unix())
 ```
@@ -27,7 +41,7 @@ fmt.Println("🟢 t1:", t1, t1.Unix())
 ```go
 t1, err := time.Parse(time.RFC3339, "2023-01-01T17:00:00+07:00")
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println("🟢 t1:", t1, t1.Unix())
 ```
@@ -36,7 +50,7 @@ fmt.Println("🟢 t1:", t1, t1.Unix())
 ```go
 t1, err := time.Parse("2006-01-02 15:04:05 -07", "2023-01-01 17:00:00 +07")
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println("🟢 t1:", t1, t1.Unix())
 ```
@@ -45,7 +59,7 @@ fmt.Println("🟢 t1:", t1, t1.Unix())
 ```go
 loc, err := time.LoadLocation("Asia/Bangkok")
 if err != nil {
-  panic(err)
+    panic(err)
 }
 t1, err := time.ParseInLocation(time.DateTime, "2023-01-01 17:00:00", loc)
 if err != nil {
@@ -54,7 +68,7 @@ if err != nil {
 fmt.Println("🟢 t1:", t1, t1.Unix())
 t2, err := time.ParseInLocation(time.DateTime, "2023-01-01 17:00:00", time.UTC)
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println("🔵 t2:", t2, t2.Unix())
 ```
