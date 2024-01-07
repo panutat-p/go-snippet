@@ -1,5 +1,21 @@
 # Runtime
 
+## flag
+
+```go
+var name string
+
+flag.StringVar(&name, "name", "", "a string")
+flag.Parse()
+
+if name == "" {
+    fmt.Println("🔴 'name' flag is required")
+    os.Exit(2)
+}
+
+fmt.Println("name:", name)
+```
+
 ## Graceful shutdown
 
 ```go
