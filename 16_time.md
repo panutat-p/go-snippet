@@ -63,7 +63,7 @@ if err != nil {
 }
 t1, err := time.ParseInLocation(time.DateTime, "2023-01-01 17:00:00", loc)
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println("🟢 t1:", t1, t1.Unix())
 t2, err := time.ParseInLocation(time.DateTime, "2023-01-01 17:00:00", time.UTC)
