@@ -3,6 +3,10 @@
 ## flag
 
 ```go
+import "flag"
+```
+
+```go
 var name string
 
 flag.StringVar(&name, "name", "", "a string")
