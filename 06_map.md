@@ -10,6 +10,89 @@ var m = make(map[string]any)
 var m := map[string]any{}
 ```
 
+## LinkedHashMap
+
+https://pkg.go.dev/container/list
+
+```go
+import (
+    "container/list"
+    "fmt"
+    "strings"
+)
+
+type LinkedHashMap struct {
+    dict map[string]int
+    list *list.List
+}
+
+func NewLinkedHashMap() *LinkedHashMap {
+    return &LinkedHashMap{
+        dict: make(map[string]int),
+        list: list.New(),
+    }
+}
+
+func (m *LinkedHashMap) Get(key string) int {
+    v, ok := m.dict[key]
+    if !ok {
+        return -1
+    }
+    return v
+}
+
+func (m *LinkedHashMap) Put(key string, value int) {
+    _, ok := m.dict[key]
+    if !ok {
+        m.list.PushBack(key)
+    }
+    m.dict[key] = value
+}
+
+func (m *LinkedHashMap) Remove(key string) {
+    _, ok := m.dict[key]
+    if !ok {
+        return
+    }
+    delete(m.dict, key)
+    for e := m.list.Front(); e != nil; e = e.Next() {
+        if e.Value.(string) == key {
+            m.list.Remove(e)
+            break
+        }
+    }
+}
+
+func (m *LinkedHashMap) Keys() []string {
+    keys := make([]string, 0, m.list.Len())
+    for e := m.list.Front(); e != nil; e = e.Next() {
+        key := e.Value.(string)
+        keys = append(keys, key)
+    }
+    return keys
+}
+
+func (m *LinkedHashMap) Size() int {
+    return m.list.Len()
+}
+
+func (m *LinkedHashMap) String() string {
+    var builder strings.Builder
+    builder.WriteString("{")
+    for e := m.list.Front(); e != nil; e = e.Next() {
+        key := e.Value.(string)
+        value := m.dict[key]
+        if e.Next() == nil {
+            builder.WriteString(fmt.Sprintf("%s: %d", key, value))
+        } else {
+            builder.WriteString(fmt.Sprintf("%s: %d, ", key, value))
+        }
+    }
+    builder.WriteString("}")
+    return builder.String()
+}
+```
+
 ## Use slice as map key
 
 ```go
