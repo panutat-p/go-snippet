@@ -10,6 +10,11 @@ sl := []int{}
 fmt.Println(sl == nil) // false
 ```
 
+```go
+var sl = make([]int, 0, 10)
+fmt.Println(sl == nil) // false
+```
+
 ## Pop
 
 ```go
