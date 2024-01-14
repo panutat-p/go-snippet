@@ -42,11 +42,10 @@ func INT(r rune) int {
 func CountDigits(input string) [10]int {
     var digits [10]int
     for _, r := range input {
-        if r < '0' || r > '9' {
-            continue
+        if unicode.IsDigit(r) {
+            idx := r - '0'
+            digits[idx]++
         }
-        idx := r - '0'
-        digits[idx]++
     }
     return digits
 }
@@ -56,6 +55,7 @@ func CountDigits(input string) [10]int {
 func CountAlphabet(input string) [26]int {
     var alphabets [26]int
     for _, r := range input {
+        r = unicode.ToLower(r)
         if r < 'a' || r > 'z' {
             continue
         }
