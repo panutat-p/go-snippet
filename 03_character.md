@@ -38,13 +38,17 @@ if unicode.IsDigit('3') {
 ```
 
 ```go
-input := "49672058310"
-var digits [10]int
-for _, r := range input {
-    position := r - '0'
-    digits[position]++
+func CountDigits(input string) [10]int {
+    var digits [10]int
+    for _, r := range input {
+        if r < '0' || r > '9' {
+            continue
+        }
+        position := r - '0'
+        digits[position]++
+    }
+    return digits
 }
-fmt.Println(digits) // [2 1 1 1 1 1 1 1 1 1]
 ```
 
 ## String
