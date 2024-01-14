@@ -8,33 +8,14 @@ fmt.Println(r)
 ```
 
 ```go
-sl := []rune("hello world")
-fmt.Println(sl)
+sl := []rune("123 ABC abc")
+fmt.Println(sl) // [49 50 51 32 65 66 67 32 97 98 99]
 ```
 
 ```go
 for _, r := range "hello world" {
     s := string(r)
     fmt.Println(r, s)
-}
-```
-
-```go
-if unicode.IsLetter('A') {
-    fmt.Println("🟢", 'A')
-}
-```
-
-```go
-if unicode.IsDigit('3') {
-    fmt.Println("🟢", '3')
-}
-```
-
-```go
-// INT convert '0' to 0, '1' to 1, ...
-func INT(r rune) int {
-    return int(r - '0')
 }
 ```
 
