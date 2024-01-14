@@ -11,7 +11,7 @@ fmt.Println(sl == nil) // false
 ```
 
 ```go
-var sl = make([]int, 0, 10)
+var sl = make([]int, 0, 0)
 fmt.Println(sl == nil) // false
 ```
 
