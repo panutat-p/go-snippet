@@ -14,11 +14,18 @@ fmt.Println(sl == nil) // false
 
 ```go
 func Pop(sl []int, idx int) []int {
-    var (
-        ret = make([]int, len(sl)-1, cap(sl)-1)
-    )
-    copy(ret, sl[:idx])         // copy first half
-    copy(ret[idx:], sl[idx+1:]) // copy after the index to the end
+    var ret = make([]int, 0, cap(sl)-1)
+    ret = append(ret, sl[:idx]...)
+    ret = append(ret, sl[idx+1:]...)
+    return ret
+}
+```
+
+```go
+func Pop(sl []int, idx int) []int {
+    var ret = make([]int, len(sl)-1, cap(sl)-1)
+    copy(ret, sl[:idx])
+    copy(ret[idx:], sl[idx+1:])
     return ret
 }
 ```
