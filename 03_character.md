@@ -55,12 +55,11 @@ func CountDigits(input string) [10]int {
 func CountAlphabet(input string) [26]int {
     var alphabets [26]int
     for _, r := range input {
-        r = unicode.ToLower(r)
-        if r < 'a' || r > 'z' {
-            continue
+        if unicode.IsLetter(r) {
+            lower := unicode.ToLower(r)
+            idx := lower - 'a'
+            alphabets[idx]++
         }
-        idx := r - 'a'
-        alphabets[idx]++
     }
     return alphabets
 }
