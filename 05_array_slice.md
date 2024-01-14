@@ -6,7 +6,7 @@ fmt.Println(sl == nil) // true
 ```
 
 ```go
-sl := []int{}
+var sl = []int{}
 fmt.Println(sl == nil) // false
 ```
 
@@ -16,7 +16,7 @@ fmt.Println(sl == nil) // false
 ```
 
 ```go
-sl := new([]int)
+var sl = new([]int)
 fmt.Printf("%T\n", sl) // *[]int
 fmt.Println(sl == nil) // false
 ```
