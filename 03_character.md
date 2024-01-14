@@ -13,15 +13,9 @@ fmt.Println(sl)
 ```
 
 ```go
-for _, e := range "hello world" {
-    fmt.Println(e, string(e))
-}
-```
-
-```go
-// INT convert '0' to 0, '1' to 1, ...
-func INT(r rune) int {
-    return int(r - '0')
+for _, r := range "hello world" {
+    s := string(r)
+    fmt.Println(r, s)
 }
 ```
 
@@ -38,6 +32,13 @@ if unicode.IsDigit('3') {
 ```
 
 ```go
+// INT convert '0' to 0, '1' to 1, ...
+func INT(r rune) int {
+    return int(r - '0')
+}
+```
+
+```go
 func CountDigits(input string) [10]int {
     var digits [10]int
     for _, r := range input {
@@ -48,6 +49,20 @@ func CountDigits(input string) [10]int {
         digits[idx]++
     }
     return digits
+}
+```
+
+```go
+func CountAlphabet(input string) [26]int {
+    var alphabets [26]int
+    for _, r := range input {
+        if r < 'a' || r > 'z' {
+            continue
+        }
+        idx := r - 'a'
+        alphabets[idx]++
+    }
+    return alphabets
 }
 ```
 
