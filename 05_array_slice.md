@@ -15,6 +15,12 @@ var sl = make([]int, 0, 10)
 fmt.Println(sl == nil) // false
 ```
 
+```go
+sl := new([]int)
+fmt.Printf("%T\n", sl) // *[]int
+fmt.Println(sl == nil) // false
+```
+
 ## Pop
 
 ```go
