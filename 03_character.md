@@ -37,6 +37,16 @@ if unicode.IsDigit('3') {
 }
 ```
 
+```go
+input := "49672058310"
+var digits [10]int
+for _, r := range input {
+    position := r - '0'
+    digits[position]++
+}
+fmt.Println(digits) // [2 1 1 1 1 1 1 1 1 1]
+```
+
 ## String
 
 ```go
