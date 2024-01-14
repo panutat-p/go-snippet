@@ -23,7 +23,7 @@ func Pop(sl []int, idx int) []int {
 
 ```go
 func Pop(sl []int, idx int) []int {
-    var ret = make([]int, len(sl)-1, cap(sl)-1)
+    var ret = make([]int, len(sl)-1, len(sl)-1)
     copy(ret, sl[:idx])
     copy(ret[idx:], sl[idx+1:])
     return ret
