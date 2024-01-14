@@ -44,8 +44,8 @@ func CountDigits(input string) [10]int {
         if r < '0' || r > '9' {
             continue
         }
-        position := r - '0'
-        digits[position]++
+        idx := r - '0'
+        digits[idx]++
     }
     return digits
 }
