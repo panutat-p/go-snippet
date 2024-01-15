@@ -20,6 +20,12 @@ for _, r := range "hello world" {
 ```
 
 ```go
+func IsLetterOrDigit(r rune) bool {
+    return unicode.IsLetter(r) || unicode.IsDigit(r)
+}
+```
+
+```go
 func CountDigits(input string) [10]int {
     var digits [10]int
     for _, r := range input {
