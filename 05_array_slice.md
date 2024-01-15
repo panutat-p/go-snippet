@@ -41,7 +41,7 @@ func Pop(sl []int, idx int) []int {
 }
 ```
 
-## Package sort
+## `sort`
 
 https://pkg.go.dev/sort
 
@@ -52,8 +52,8 @@ fmt.Println(nums) // [1 2 2 3 5 7 8 9]
 ```
 
 ### Less function `func(i, j int) bool`
-* returns `true`: elements at index `i` should come before elements at index `j`
-* returns `false`: elements at index `i` should come after or be equal to elements at index `j`
+* returns `true`: swap
+* returns `false`: no action
 
 ```go
 nums := []uint32{9, 3, 2, 8, 1, 5, 7, 2}
@@ -95,7 +95,7 @@ sort.Slice(nums, func(i, j int) bool {
 fmt.Println(nums) // [2 4 -3 -1 -7]
 ```
 
-## Package slices
+## `slices`
 
 https://pkg.go.dev/slices
 
@@ -105,6 +105,27 @@ https://costamagna.medium.com/exploring-the-power-of-go-1-21-slices-package-6e01
 sl := []int{3, 2, 4, 7, 3, 1, 2, 4 ,6}
 slices.Sort(sl)
 fmt.Println(sl) // [1 2 2 3 3 4 4 6 7]
+```
+
+### cmp function `func(a, b T) int`
+* returns `-1`: swap
+* returns `0`: no action
+* returns `1`: no action ❓
+
+```go
+sl := []int{3, 2, 4, 7, 3, 1, 2, 4, 6}
+slices.SortFunc(sl, func(a, b int) int {
+    return cmp.Compare(a, b)
+})
+fmt.Println(sl) // [1 2 2 3 3 4 4 6 7]
+```
+
+```go
+sl := []int{3, 2, 4, 7, 3, 1, 2, 4, 6}
+slices.SortFunc(sl, func(a, b int) int {
+    return cmp.Compare(b, a)
+})
+fmt.Println(sl) // [7 6 4 4 3 3 2 2 1]
 ```
 
 ```go
