@@ -76,6 +76,9 @@ func main() {
 
 ## Custom marshaller: string to number
 
+* `Fruit{ Name:"apple" Price: "100.50" }` to `{"name":"apple","price":100.50}`
+* `{"name":"apple","price":100.50}` to `Fruit{ Name:"apple" Price:"100.50" }`
+
 ```go
 import (
     "encoding/json"
