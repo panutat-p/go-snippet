@@ -74,6 +74,49 @@ func main() {
 }
 ```
 
+## Custom marshaller: string to number
+
+```go
+import (
+    "encoding/json"
+    "fmt"
+)
+
+type Fruit struct {
+    Name  string `json:"name"`
+    Price string `json:"price"`
+}
+
+func (f Fruit) MarshalJSON() ([]byte, error) {
+    fmt.Println("🟡 MarshalJSON")
+    type Alias Fruit
+    
+    return json.Marshal(&struct {
+        Alias
+            Price json.Number `json:"price"`
+        }{
+            Alias: (Alias)(f),
+            Price: json.Number(f.Price),
+    })
+}
+
+func (f *Fruit) UnmarshalJSON(b []byte) error {
+    fmt.Println("🟡 UnmarshalJSON")
+    type Alias Fruit
+    aux := &struct {
+        *Alias
+        Price json.Number `json:"price"`
+    }{
+        Alias: (*Alias)(f),
+    }
+    if err := json.Unmarshal(b, &aux); err != nil {
+        return err
+    }
+    f.Price = aux.Price.String()
+    return nil
+}
+```
+
 ## Marshal to null (override)
 
 ```go
