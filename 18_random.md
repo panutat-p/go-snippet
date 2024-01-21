@@ -14,11 +14,11 @@ fmt.Println(n)
 ```
 
 ```go
-func RandString(n int) string {
-    var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+func RandAlphabet(n int) string {
+    var alphabet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
     b := make([]rune, n)
     for i := range b {
-        b[i] = letterRunes[rand.Intn(len(letterRunes))]
+        b[i] = alphabet[rand.Intn(len(alphabet))]
     }
     return string(b)
 }
