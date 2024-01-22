@@ -6,11 +6,11 @@ https://pkg.go.dev/encoding/json
 
 ```go
 func PrintJSON(o any) {
-  b, err := json.MarshalIndent(o, "", "  ")
-  if err != nil {
-  	panic(err)
-  }
-  fmt.Println(string(b))
+    b, err := json.MarshalIndent(o, "", "  ")
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(string(b))
 }
 ```
 
@@ -18,59 +18,25 @@ func PrintJSON(o any) {
 
 ```go
 type Person struct {
-  Name  string `json:"name"`
-  Age   int    `json:"age"`
-  City  string `json:"city"`
-  Email string `json:"email"`
+    Name  string `json:"name"`
+    Age   int    `json:"age"`
+    City  string `json:"city"`
+    Email string `json:"email"`
 }
 
 func main() {
-  person := Person{
-    Name:  "John Doe",
-    Age:   30,
-    City:  "New York",
-    Email: "john@gmail.com",
-  }
-
-  b, err := json.Marshal(person)
-  if err != nil {
-    panic(err)
-  }
-  fmt.Println(string(b))
-}
-```
-
-```go
-func PrintStruct(o any) {
-  b, err := json.MarshalIndent(o, "", "  ")
-  if err != nil {
-    panic(err)
-  }
-  fmt.Println(string(b))
-}
-```
-
-## Unmarshal
-
-```go
-type Person struct {
-  Name  string `json:"name"`
-  Age   int    `json:"age"`
-  City  string `json:"city"`
-  Email string `json:"email"`
-}
-
-func main() {
-  s := `{"name":"John Doe","age":30,"city":"New York","email":"john@gmail.com"}`
-  b := []byte(s)
-
-  var person Person
-  err := json.Unmarshal(b, &person)
-  if err != nil {
-    panic(err)
-  }
-
-  fmt.Printf("%+v\n", person)
+    person := Person{
+      Name:  "John Doe",
+      Age:   30,
+      City:  "New York",
+      Email: "john@gmail.com",
+    }
+  
+    b, err := json.Marshal(person)
+    if err != nil {
+      panic(err)
+    }
+    fmt.Println(string(b))
 }
 ```
 
