@@ -14,29 +14,26 @@ func PrintJSON(o any) {
 }
 ```
 
-## Marshal
+## Marshal & Unmarshal
 
 ```go
-type Person struct {
-    Name  string `json:"name"`
-    Age   int    `json:"age"`
-    City  string `json:"city"`
-    Email string `json:"email"`
-}
-
-func main() {
-    person := Person{
-      Name:  "John Doe",
-      Age:   30,
-      City:  "New York",
-      Email: "john@gmail.com",
-    }
-  
-    b, err := json.Marshal(person)
+func Marshal(o any) string {
+    b, err := json.Marshal(o)
     if err != nil {
-      panic(err)
+        panic(err)
     }
-    fmt.Println(string(b))
+    return string(b)
+}
+```
+
+```go
+func Unmarshal(s string) map[string]any {
+    var o map[string]any
+    err := json.Unmarshal([]byte(s), &o)
+    if err != nil {
+        panic(err)
+    }
+    return o
 }
 ```
 
