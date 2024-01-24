@@ -3,22 +3,30 @@
 ```go
 var sl []int
 fmt.Println(sl == nil) // true
+b, _ := json.Marshal(sl)
+fmt.Println(string(b)) // null
 ```
 
 ```go
 var sl = []int{}
 fmt.Println(sl == nil) // false
+b, _ := json.Marshal(sl)
+fmt.Println(string(b)) // []
 ```
 
 ```go
 var sl = make([]int, 0, 0)
 fmt.Println(sl == nil) // false
+b, _ := json.Marshal(sl)
+fmt.Println(string(b)) // []
 ```
 
 ```go
 var sl = new([]int)
 fmt.Printf("%T\n", sl) // *[]int
 fmt.Println(sl == nil) // false
+b, _ := json.Marshal(sl)
+fmt.Println(string(b)) // null
 ```
 
 ## Pop
