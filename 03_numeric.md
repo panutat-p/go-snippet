@@ -32,7 +32,7 @@ fmt.Println(r3.FloatString(2)) // 0.02
 ```go
 r1, _ := new(big.Rat).SetString("0.7")
 r2, _ := new(big.Rat).SetString("0.1")
-r3 := new(big.Rat).Mul(r1, r2)
+r3 := new(big.Rat).Quo(r1, r2)
 fmt.Println(r3.FloatString(2)) // 7.00
 ```
 
@@ -54,6 +54,32 @@ https://github.com/shopspring/decimal
 
 ```go
 import "github.com/shopspring/decimal"
+```
+
+```go
+r1, err := decimal.NewFromString("0.1")
+if err != nil {
+    panic(err)
+}
+r2, err := decimal.NewFromString("0.2")
+if err != nil {
+    panic(err)
+}
+r3 := r1.Mul(r2)
+fmt.Println(r3.StringFixed(2)) // 0.02
+```
+
+```go
+r1, err := decimal.NewFromString("0.7")
+if err != nil {
+    panic(err)
+}
+r2, err := decimal.NewFromString("0.1")
+if err != nil {
+    panic(err)
+}
+r3 := r1.Div(r2)
+fmt.Println(r3.StringFixed(2)) // 7.00
 ```
 
 ```go
