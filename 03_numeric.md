@@ -72,3 +72,13 @@ if err != nil {
 }
 fmt.Println(d.StringFixed(2)) // 13.52
 ```
+
+## Rounding strategies
+
+| Number | Round Half Up | Bankers' Rounding |
+|--------|---------------|-------------------|
+| 0.5    | 1             | 0                 |
+| 1.5    | 2             | 2                 |
+| 2.5    | 3             | 2                 |
+| 3.5    | 4             | 4                 |
+| 4.5    | 5             | 4                 |
