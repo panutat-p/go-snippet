@@ -40,14 +40,12 @@ fmt.Println(got.FloatString(2)) // 7.00
 
 ```go
 r := new(big.Rat).SetFloat64(13.514)
-fmt.Println(r.FloatString(3))
 f, _ := r.Float64()
 fmt.Printf("%.2f\n", f) // 13.51
 ```
 
 ```go
 r := new(big.Rat).SetFloat64(13.515)
-fmt.Println(r.FloatString(3))
 f, _ := r.Float64()
 fmt.Printf("%.2f\n", f) // 13.52
 ```
