@@ -48,3 +48,27 @@ r, _ := new(big.Rat).SetString("13.515")
 f, _ := r.Float64()
 fmt.Printf("%.2f\n", f) // 13.52
 ```
+
+## Decimal
+
+https://github.com/shopspring/decimal
+
+```go
+import "github.com/shopspring/decimal"
+```
+
+```go
+d, err := decimal.NewFromString("13.514")
+if err != nil {
+  panic(err)
+}
+fmt.Println(d.StringFixed(2)) // 13.51
+```
+
+```go
+d, err := decimal.NewFromString("13.515")
+if err != nil {
+  panic(err)
+}
+fmt.Println(d.StringFixed(2)) // 13.52
+```
