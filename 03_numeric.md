@@ -60,7 +60,7 @@ import "github.com/shopspring/decimal"
 ```go
 d, err := decimal.NewFromString("13.514")
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println(d.StringFixed(2)) // 13.51
 ```
@@ -68,7 +68,7 @@ fmt.Println(d.StringFixed(2)) // 13.51
 ```go
 d, err := decimal.NewFromString("13.515")
 if err != nil {
-  panic(err)
+    panic(err)
 }
 fmt.Println(d.StringFixed(2)) // 13.52
 ```
