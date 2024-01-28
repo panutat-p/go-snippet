@@ -36,7 +36,7 @@ got := new(big.Rat).Quo(r1, r2)
 fmt.Println(got.FloatString(2)) // 7.00
 ```
 
-## Big rational + currentcy rounding
+## Big rational + standard rounding
 
 ```go
 r := new(big.Rat).SetFloat64(13.514)
