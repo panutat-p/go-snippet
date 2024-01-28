@@ -35,7 +35,6 @@ r2, _ := new(big.Rat).SetString("0.1")
 r3 := new(big.Rat).Mul(r1, r2)
 fmt.Println(r3.FloatString(2)) // 7.00
 ```
-## Big rational + standard rounding
 
 ```go
 r, _ := new(big.Rat).SetString("13.514")
