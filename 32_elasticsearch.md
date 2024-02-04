@@ -80,12 +80,12 @@ func CreateIndex(ctx context.Context, index string) error {
 var c *elasticsearch.Client
 
 type ElasticMapping struct {
-	Mapping struct {
-		Properties map[string]struct {
-			Type   string `json:"type"`
-			Fields any    `json:"fields"`
-		} `json:"properties"`
-	} `json:"mappings"`
+    Mapping struct {
+        Properties map[string]struct {
+            Type   string `json:"type"`
+            Fields any    `json:"fields"`
+        } `json:"properties"`
+    } `json:"mappings"`
 }
 
 func IndexMapping(ctx context.Context, index string) (*ElasticMapping, error) {
