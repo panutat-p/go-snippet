@@ -79,6 +79,48 @@ func CreateIndex(ctx context.Context, index string) error {
 ```go
 var c *elasticsearch.Client
 
+type ElasticMapping struct {
+	Mapping struct {
+		Properties map[string]struct {
+			Type   string `json:"type"`
+			Fields any    `json:"fields"`
+		} `json:"properties"`
+	} `json:"mappings"`
+}
+
+func IndexMapping(ctx context.Context, index string) (*ElasticMapping, error) {
+    api := c.Indices.GetMapping
+    res, err := api(
+        api.WithContext(ctx),
+        api.WithErrorTrace(),
+        api.WithIndex(index),
+    )
+    if err != nil {
+        return nil, err
+    }
+    defer res.Body.Close()
+    if res.IsError() {
+        return nil, err
+    }
+    b, err := io.ReadAll(res.Body)
+    if err != nil {
+        return nil, err
+    }
+    var indexMapping map[string]ElasticMapping
+	err = json.Unmarshal(b, &indexMapping)
+	if err != nil {
+        err = errors.New("json")
+        err = errors.Join(ErrElasticsearchMerchant, err)
+        return nil, err
+	}
+    mapping := indexMapping[index]
+    return &mapping, nil
+}
+```
+
+```go
+var c *elasticsearch.Client
+
 func Insert(ctx context.Context, index string, doc any) error {
     data, err := json.Marshal(doc)
     if err != nil {
