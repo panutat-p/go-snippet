@@ -6,6 +6,8 @@ https://go.dev/doc/modules/layout
 
 ### Package names
 
+
+
 https://go.dev/blog/package-names
 
 * Avoid meaningless: `util`, `common`, `misc`, ...
