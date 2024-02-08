@@ -1,5 +1,66 @@
 # Go Routines
 
+## Semaphore
+
+https://levelup.gitconnected.com/go-concurrency-pattern-semaphore-9587d45f058d
+
+```go
+var (
+    c atomic.Uint32
+)
+
+type Fruit struct {
+    ID    uint32
+    Name  string
+    Price int
+}
+
+func main() {
+    var wg sync.WaitGroup
+    fruits := GenerateFruits(100)
+    semaphore := make(chan struct{}, 10)
+    wg.Add(len(fruits))
+    for _, f := range fruits {
+        f := f
+        go func() {
+            semaphore <- struct{}{}
+            defer wg.Done()
+            defer func() { <-semaphore }()
+            PrintFruit(f)
+        }()
+    }
+    wg.Wait()
+}
+
+func GenerateFruits(count int) []Fruit {
+    var fruits []Fruit
+    for i := 0; i < count; i++ {
+        c.Add(1)
+        f := Fruit{
+            ID:    c.Load(),
+            Name:  RandStringRunes(6),
+            Price: rand.Intn(100),
+        }
+        fruits = append(fruits, f)
+    }
+    return fruits
+}
+
+func RandStringRunes(n int) string {
+    var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    b := make([]rune, n)
+    for i := range b {
+        b[i] = letterRunes[rand.Intn(len(letterRunes))]
+    }
+    return string(b)
+}
+
+func PrintFruit(f Fruit) {
+    time.Sleep(1 * time.Second)
+    fmt.Printf("%+v\n", f)
+}
+```
+
 ## errgroup
 
 https://pkg.go.dev/golang.org/x/sync/errgroup
