@@ -14,6 +14,15 @@ fmt.Println(n)
 ```
 
 ```go
+func RandNumber(n int) string {
+    rand.Seed(time.Now().UnixNano())
+    min := int(math.Pow10(n-1))
+    max := int(math.Pow10(n)) - 1
+    return fmt.Sprintf("%d", min+rand.Intn(max-min+1))
+}
+```
+
+```go
 func RandAlphabet(n int) string {
     var alphabet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
     b := make([]rune, n)
