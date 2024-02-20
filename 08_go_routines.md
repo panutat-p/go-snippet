@@ -69,6 +69,48 @@ https://pkg.go.dev/golang.org/x/sync/errgroup
 go get golang.org/x/sync/errgroup
 ```
 
+### Limits the number of active goroutines in the group
+
+```go
+var c atomic.Uint32
+
+func main() {
+  var group errgroup.Group
+  group.SetLimit(2)
+  fruits := GenerateFruits(100)
+  for _, f := range fruits {
+    f := f
+    group.Go(func() error {
+      PrintFruit(f)
+      return nil
+    })
+  }
+  err := group.Wait()
+  if err != nil {
+    fmt.Println("🔴 err:", err)
+  }
+}
+
+func GenerateFruits(count int) []Fruit {
+  var fruits []Fruit
+  for i := 0; i < count; i++ {
+    c.Add(1)
+    f := Fruit{
+      ID:    c.Load(),
+      Name:  RandStringRunes(6),
+      Price: rand.Intn(100),
+    }
+    fruits = append(fruits, f)
+  }
+  return fruits
+}
+
+func PrintFruit(f Fruit) {
+  time.Sleep(1 * time.Second)
+  fmt.Printf("%+v\n", f)
+}
+```
+
 ### No stop
 
 * Expected: `apple` `amazon` `reddit` will success
