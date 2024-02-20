@@ -16,9 +16,9 @@ fmt.Println(n)
 ```go
 func RandNumber(n int) string {
     rand.Seed(time.Now().UnixNano())
-    min := int(math.Pow10(n-1))
-    max := int(math.Pow10(n)) - 1
-    return fmt.Sprintf("%d", min+rand.Intn(max-min+1))
+    low := int(math.Pow10(n - 1))
+    high := int(math.Pow10(n)) - 1
+    return fmt.Sprintf("%d", low+rand.Intn(high-low+1))
 }
 ```
 
