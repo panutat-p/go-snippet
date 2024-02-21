@@ -70,5 +70,10 @@ db.Table("fruit").Last(&fruit)
 
 ```go
 var fruit Fruit
-db.Table("fruit").Where("name = ? AND color = ?", "apple", "red").First(&fruit)
+db.Table("fruit").Where("name = ? AND color = ?", "apple", "red").Last(&fruit)
+```
+
+```go
+var fruits []Fruit
+db.Table("fruit").Where("name = ? AND color = ?", "apple", "red").Find(&fruits)
 ```
