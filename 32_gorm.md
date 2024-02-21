@@ -55,3 +55,20 @@ func Connect(host, port, username, password, dbName string) (*gorm.DB, *sql.DB) 
     return g, db
 }
 ```
+
+## Query
+
+```go
+var fruit Fruit
+db.Table("fruit").First(&fruit)
+```
+
+```go
+var fruit Fruit
+db.Table("fruit").Last(&fruit)
+```
+
+```go
+var fruit Fruit
+db.Table("fruit").Where("name = ? AND color = ?", "apple", "red").First(&fruit)
+```
