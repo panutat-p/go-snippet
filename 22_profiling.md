@@ -41,11 +41,13 @@ Open command prompt
 ```sh
 go tool pprof http://localhost:8081/debug/pprof/heap
 ```
-* top: Shows the top functions that are taking up the most memory or CPU (depending on the profile you're looking at).
-* list `main`: Shows the annotated source code for the function specified.
-* web: Generates a graph of the profile and opens it in a web browser.
-* peek `main`: Shows callers and callees of the function specified.
-* help: Shows a list of available commands.
+* top: Shows the top functions that are taking up the most memory or CPU (depending on the profile you're looking at)
+* tree: Print a tree of callers and callees
+* peek `main`: Print a table of callers and callees of the function specified
+* web: Generates a graph & opens it in a web browser
+* png: Generate a graph as an image file
+* list `main`: Print the annotated source code for the function specified
+* help: Shows a list of available commands
 
 Open GUI
 ```sh
