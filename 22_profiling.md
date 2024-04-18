@@ -85,7 +85,7 @@ https://pkg.go.dev/runtime/pprof
 func main() {
 	pkg.Create("main.pprof")
 	defer pkg.Close()
-	s := strings.Repeat("a", 100000)
+	s := strings.Repeat("a", 200000)
 	_ = Reverse(s)
 	pkg.Write()
 }
