@@ -6,6 +6,8 @@ https://pkg.go.dev/net/http/pprof
 
 https://medium.com/@ravikumarray92/profiling-in-go-with-pprof-e45656df033e
 
+https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof
+
 ```go
 package main
 
