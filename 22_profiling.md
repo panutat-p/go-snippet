@@ -2,6 +2,8 @@
 
 ## `net/http/pprof`
 
+https://pkg.go.dev/net/http/pprof
+
 https://medium.com/@ravikumarray92/profiling-in-go-with-pprof-e45656df033e
 
 ```go
@@ -57,3 +59,30 @@ go tool pprof --http=:8082 http://localhost:8081/debug/pprof/heap
 * Go to http://localhost:8082/ui
 
 ## `runtime/pprof`
+
+https://pkg.go.dev/runtime/pprof
+
+```go
+import (
+    "os"
+    "runtime/pprof"
+)
+
+var hp *os.File
+
+func Create() {
+    file, err := os.Create("heap.pprof")
+    if err != nil {
+        panic(err)
+    }
+    hp = file
+}
+
+func Close() {
+    hp.Close()
+}
+
+func Write() {
+    pprof.WriteHeapProfile(hp)
+}
+```
