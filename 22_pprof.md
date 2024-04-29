@@ -57,22 +57,24 @@ Download
 wget -O heap.pprof http://localhost:8081/debug/pprof/heap
 ```
 
-Collect CPU profile then open command prompt
+## `go tool`
+
+CPU
 ```sh
 go tool pprof http://localhost:8081/debug/pprof/profile?seconds=30
 ```
 
-Open command prompt for the snapshot of the memory usage
+Heap
 ```sh
 go tool pprof http://localhost:8081/debug/pprof/heap
 ```
 
-Open command prompt for the snapshot of the Go-routines
+Go-routines
 ```sh
 go tool pprof http://localhost:8081/debug/pprof/goroutine
 ```
 
-Open command prompt for the snapshot of the threads
+Threads
 ```sh
 go tool pprof http://localhost:8081/debug/pprof/threadcreate
 ```
