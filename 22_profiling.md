@@ -57,9 +57,24 @@ Download
 wget -O heap.pprof http://localhost:8081/debug/pprof/heap
 ```
 
-Open command prompt
+Collect CPU profile then open command prompt
+```sh
+go tool pprof http://localhost:8081/debug/pprof/profile?seconds=30
+```
+
+Open command prompt for the snapshot of the memory usage
 ```sh
 go tool pprof http://localhost:8081/debug/pprof/heap
+```
+
+Open command prompt for the snapshot of the Go-routines
+```sh
+go tool pprof http://localhost:8081/debug/pprof/goroutine
+```
+
+Open command prompt for the snapshot of the threads
+```sh
+go tool pprof http://localhost:8081/debug/pprof/threadcreate
 ```
 
 * top: Shows the top functions that are taking up the mostlis memory or CPU (depending on the profile you're looking at)
