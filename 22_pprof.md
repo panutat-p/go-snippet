@@ -1,5 +1,7 @@
 # Profiling
 
+https://go.dev/blog/pprof
+
 ## Install
 
 Ubuntu
@@ -79,7 +81,21 @@ Threads
 go tool pprof http://localhost:8081/debug/pprof/threadcreate
 ```
 
-* top: Shows the top functions that are taking up the mostlis memory or CPU (depending on the profile you're looking at)
+### `top`
+
+* top: Shows the top functions sorted by number of samples in which the function was actively executing
+* top10: Shows the top 10 functions sorted by number of samples in which the function was actively executing
+* top10 -cum Shows the top 10 functions sorted by number of samples in which the function appeared
+
+> The first column represents the number of samples in which the function was actively executing,
+> i.e., it was the function currently running at the time the sample was taken.
+> This gives you an idea of how much CPU time the function itself is consuming.
+
+> The fourth column, on the other hand, represents the number of samples in which the function was present on the call stack.
+> This includes the times when the function was actively executing (as represented in the first column)
+> and the times when it was waiting for a function it called to return.
+> This gives you an idea of the total time spent in the function and all the functions it called.
+
 * list `main`: Print the annotated source code for the function specified
 * tree: Print a tree of callers and callees
 * peek `main`: Print a table of callers and callees of the function specified
