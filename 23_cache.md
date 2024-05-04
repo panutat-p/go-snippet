@@ -6,7 +6,7 @@ https://github.com/patrickmn/go-cache
 
 ```go
 import (
-     "github.com/patrickmn/go-cache"
+    "github.com/patrickmn/go-cache"
 )
 ```
 
