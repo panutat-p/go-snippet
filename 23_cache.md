@@ -29,5 +29,11 @@ func main() {
         ttl := time.Until(exp)
         fmt.Println("🟢 apple:", apple, "TTL:", ttl) // TTL ~ 4m59.999958973s
     }
+
+    v, err := c.IncrementInt("apple", 1)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println("🟢 apple:", v) // 16
 }
 ```
