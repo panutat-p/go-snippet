@@ -6,19 +6,28 @@ https://github.com/patrickmn/go-cache
 
 ```go
 import (
-    "github.com/patrickmn/go-cache"
+	"fmt"
+	"time"
+
+	"github.com/patrickmn/go-cache"
 )
-```
 
-```go
-c := cache.New(5*time.Minute, 10*time.Minute)
+func main() {
+	c := cache.New(5*time.Minute, 10*time.Minute)
 
-c.Set("apple", 15, cache.DefaultExpiration)
-c.Set("banana", 8, cache.NoExpiration)
+	c.Set("apple", 15, cache.DefaultExpiration)
 
-v, ok := c.Get("apple")
-if ok {
-    apple := v.(string)
-    fmt.Println(apple)
+	v, ok := c.Get("apple")
+	if ok {
+		apple := v.(int)
+		fmt.Println("🟢 apple:", apple)
+	}
+
+	v, exp, ok := c.GetWithExpiration("apple")
+	if ok {
+		apple := v.(int)
+		ttl := time.Until(exp)
+		fmt.Println("🟢 apple:", apple, "TTL:", ttl) // 4m59.999958973s
+	}
 }
 ```
