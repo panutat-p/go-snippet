@@ -35,5 +35,12 @@ func main() {
         panic(err)
     }
     fmt.Println("🟢 apple:", v) // 16
+
+    items := c.Items()
+    for k, v := range items {
+        expiredAt := time.Unix(0, v.Expiration)
+        ttl := time.Until(expiredAt)
+        fmt.Println("🟢", k, v.Object, ttl)
+    }
 }
 ```
