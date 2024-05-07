@@ -40,22 +40,31 @@ ch := make(chan string, 5)
 for i := 1; i <= 5; i++ {
     ch <- fmt.Sprintf("Message %d", i)
 }
+
 close(ch)
+
 for message := range ch {
     fmt.Println(message)
 }
 ```
+
+> ⚠️ In Go, when you read from a closed channel, you will receive the zero value for the channel's type.
+> For a channel of strings, this would be an empty string `""`.
+> For a channel of integers, this would be `0`.
 
 ```go
 ch := make(chan string, 5)
 for i := 1; i <= 5; i++ {
     ch <- fmt.Sprintf("Message %d", i)
 }
+
 close(ch)
+
 for {
     select {
     case msg, ok := <- ch:
         if !ok {
+            // ⚠️ channel has been closed
             return
         }
         fmt.Println(msg)
