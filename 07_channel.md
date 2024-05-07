@@ -10,6 +10,59 @@ var ch = make(chan int)
 var ch = make(chan int, 1)
 ```
 
+## Write
+
+⚠️ Deadlock
+```go
+ch := make(chan string)
+
+ch <- `{"apple": 15, "banana": 8}` // block
+
+msg := <-ch
+fmt.Println(msg)
+```
+
+```go
+ch := make(chan string)
+
+go func() {
+    ch <- `{"apple": 15, "banana": 8}`
+}()
+
+msg := <-ch
+fmt.Println(msg)
+```
+
+## Read
+
+```go
+ch := make(chan string, 5)
+for i := 1; i <= 5; i++ {
+    ch <- fmt.Sprintf("Message %d", i)
+}
+close(ch)
+for message := range ch {
+    fmt.Println(message)
+}
+```
+
+```go
+ch := make(chan string, 5)
+for i := 1; i <= 5; i++ {
+    ch <- fmt.Sprintf("Message %d", i)
+}
+close(ch)
+for {
+    select {
+    case msg, ok := <- ch:
+        if !ok {
+            return
+        }
+        fmt.Println(msg)
+    }
+}
+```
+
 ## Preemptive vs Cooperative
 > Preemption refers to the ability of the Go runtime scheduler to interrupt a running goroutine and switch the execution to a different goroutine.
 
