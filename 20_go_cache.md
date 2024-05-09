@@ -25,13 +25,13 @@ if ok {
     ttl := time.Until(exp)
     fmt.Println("🟢 apple:", apple, "TTL:", ttl) // TTL ~ 4m59.999958973s
 }
+```
 
-v, err := c.IncrementInt("apple", 1)
-if err != nil {
-    panic(err)
-}
-fmt.Println("🟢 apple:", v) // 16
+```go
+c := cache.New(5*time.Minute, 10*time.Minute)
 
+c.Set("apple", 15, cache.DefaultExpiration)
+c.Set("banana", 8, cache.DefaultExpiration)
 items := c.Items()
 for k, v := range items {
     expiredAt := time.Unix(0, v.Expiration)
