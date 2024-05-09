@@ -5,11 +5,11 @@
 https://github.com/patrickmn/go-cache
 
 ```go
-import "github.com/patrickmn/go-cache"
+import gocache "github.com/patrickmn/go-cache"
 ```
 
 ```go
-c := cache.New(5*time.Minute, 10*time.Minute)
+c := gocache.New(5*time.Minute, 10*time.Minute)
 
 c.Set("apple", 15, cache.DefaultExpiration)
 
@@ -28,7 +28,7 @@ if ok {
 ```
 
 ```go
-c := cache.New(5*time.Minute, 10*time.Minute)
+c := gocache.New(5*time.Minute, 10*time.Minute)
 
 c.Set("apple", 15, cache.DefaultExpiration)
 c.Set("banana", 8, cache.DefaultExpiration)
@@ -41,7 +41,7 @@ for k, v := range items {
 ```
 
 ```go
-c := cache.New(5*time.Minute, 10*time.Minute)
+c := gocache.New(5*time.Minute, 10*time.Minute)
 
 c.Set("apple", 15, cache.DefaultExpiration)
 v, err := c.IncrementInt("apple", 1)
@@ -52,7 +52,7 @@ fmt.Println("🟢 apple:", v) // 16
 ```
 
 ```go
-c := cache.New(5*time.Minute, 10*time.Minute)
+c := gocache.New(5*time.Minute, 10*time.Minute)
 
 c.Set("apple", 15, cache.DefaultExpiration)
 c.Delete("apple")
