@@ -60,6 +60,16 @@ s := Profile {
 }
 ```
 
+## Why doesn't Go have variance in its type system?
+
+https://blog.merovius.de/posts/2018-06-03-why-doesnt-go-have-variance-in
+* Why can’t I pass e.g. an `[]int` to a `func([]interface{})`
+* Subtypes have different memory representations
+
+https://go.dev/doc/faq#convert_slice_of_interface
+* Can I convert a []T to an []interface{}?
+* It is disallowed by the language specification because the two types do not have the same representation in memory
+
 ## Layout guidelines
 
 https://go.dev/doc/modules/layout
