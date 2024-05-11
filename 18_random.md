@@ -8,11 +8,13 @@
 rand.Seed(time.Now().UnixNano())
 ```
 
+Generate [0,n)
 ```go
 n := rand.Intn(100)
 fmt.Println(n)
 ```
 
+Generate string of n digits
 ```go
 func RandNumber(n int) string {
     low := int(math.Pow10(n - 1))
@@ -21,6 +23,7 @@ func RandNumber(n int) string {
 }
 ```
 
+Generate string of n characters
 ```go
 func RandAlphabet(n int) string {
     var alphabet = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -29,5 +32,18 @@ func RandAlphabet(n int) string {
         b[i] = alphabet[rand.Intn(len(alphabet))]
     }
     return string(b)
+}
+```
+
+Generate decimal of XX.YY
+```go
+import "github.com/shopspring/decimal"
+
+func RandDecimal(n int, p int32) decimal.Decimal {
+    low := decimal.NewFromInt(int64(math.Pow10(n - 1)))
+    high := decimal.NewFromInt(int64(math.Pow10(n)) - 1)
+    diff := high.Sub(low)
+    randDecimal := decimal.NewFromFloat(rand.Float64()).Mul(diff).Add(low)
+    return randDecimal.Round(p)
 }
 ```
