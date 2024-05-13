@@ -7,7 +7,7 @@ https://github.com/guregu/null
 ```go
 payload := `{"name": "apple"}`
 type Fruit struct {
-	Name    string    `json:"name"`
+    Name    string    `json:"name"`
 }
 var f Fruit
 err := json.Unmarshal([]byte(payload), &f)
