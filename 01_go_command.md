@@ -60,6 +60,15 @@ go list -m all
 ```
 
 ## Go Test
+
 ```shell
 go test ./...
+```
+
+```sh
+go test -coverprofile=coverage.out ./...
+```
+
+```sh
+go tool cover -html=coverage.out
 ```
