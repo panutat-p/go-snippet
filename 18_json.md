@@ -17,24 +17,20 @@ func PrintJSON(o any) {
 ## Marshal & Unmarshal
 
 ```go
-func Marshal(o any) string {
-    b, err := json.Marshal(o)
-    if err != nil {
-        panic(err)
-    }
-    return string(b)
+b, err := json.Marshal(o)
+if err != nil {
+    panic(err)
 }
+fmt.Println(string(b))
 ```
 
 ```go
-func Unmarshal(s string) map[string]any {
-    var o map[string]any
-    err := json.Unmarshal([]byte(s), &o)
-    if err != nil {
-        panic(err)
-    }
-    return o
+var m map[string]any
+err := json.Unmarshal([]byte(`{"name": "apple", "price": 100}`), &m)
+if err != nil {
+    panic(err)
 }
+fmt.Printf("%+v\n", m)
 ```
 
 ## Custom marshaller: string to number
@@ -54,7 +50,6 @@ type Fruit struct {
 }
 
 func (f Fruit) MarshalJSON() ([]byte, error) {
-    fmt.Println("🟡 MarshalJSON")
     type Alias Fruit
     
     return json.Marshal(&struct {
@@ -67,7 +62,6 @@ func (f Fruit) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Fruit) UnmarshalJSON(b []byte) error {
-    fmt.Println("🟡 UnmarshalJSON")
     type Alias Fruit
     aux := &struct {
         *Alias
