@@ -1,4 +1,23 @@
-# KSUID
+# ID Generator
+
+## UUID
+
+https://github.com/google/uuid
+
+```go
+import (
+    "fmt"
+
+    "github.com/google/uuid"
+)
+
+func main() {
+    id := uuid.New()
+    fmt.Println(id.String())
+}
+```
+
+## KSUID
 
 https://github.com/segmentio/ksuid
 
