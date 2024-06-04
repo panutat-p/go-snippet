@@ -9,22 +9,36 @@ type Profile struct {
     Username string `validate:"required,alphanum,min=4,max=20"`
     Password string `validate:"required,min=6,max=20"`
 }
-```
 
-```go
-invalidProfile := Profile{
-    Username: "user@name", // Contains non-alphanumeric characters
-    Password: "short",     // Password is too short
+p := Profile{
+    Username: "user@name",
+    Password: "short",
 }
 
-val := validator.New()
-err := val.Struct(invalidProfile)
+validate := validator.New()
+err := validate.Struct(p)
 if err != nil {
     fmt.Println("🔴 Validation failed")
     fmt.Println(err)
     // Key: 'Profile.Username' Error:Field validation for 'Username' failed on the 'alphanum' tag
     // Key: 'Profile.Password' Error:Field validation for 'Password' failed on the 'min' tag
 }
+```
+
+```go
+type Person struct {
+    Name   string `validate:"required"`
+    Email *string `validate:"omitnil,email"`
+}
+
+p := Person{
+    Name: "John",
+    Email: nil,
+}
+
+validate := validator.New()
+err := validate.Struct(p)
+fmt.Println(err) // nil
 ```
 
 ## Custom
