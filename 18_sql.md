@@ -47,6 +47,40 @@ if err != nil {
 ```
 
 ```go
+f := Fruit{
+    Name:  "Apple",
+    Color: "Red",
+    Price: decimal.NewFromFloat(1.23),
+}
+
+_, err = db.Exec("INSERT INTO fruit(name, color, price) VALUES (?, ?, ?)", f.Name, f.Color, f.Price)
+if err != nil {
+    panic(err)
+}
+```
+
+```go
+fruits := []Fruit{
+    {Name: "apple", Color: "red", Price: decimal.NewFromFloat(15.00)},
+    {Name: "banana", Color: "yellow", Price: decimal.NewFromFloat(8.50)},
+    {Name: "carrot", Color: "orange", Price: decimal.NewFromFloat(12.50)},
+}
+
+stmt, err := db.Prepare("INSERT INTO fruit(name, color, price) VALUES (?, ?, ?)")
+if err != nil {
+    panic(err)
+}
+defer stmt.Close()
+
+for _, f := range fruits {
+    _, err = stmt.Exec(f.Name, f.Color, f.Price)
+    if err != nil {
+        panic(err)
+    }
+}
+```
+
+```go
 rows, err := db.Query("SELECT name, color, price FROM fruit LIMIT 50")
 if err != nil {
     panic(err)
