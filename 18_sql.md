@@ -102,15 +102,6 @@ fmt.Println("🟢 fruit:", fruit)
 ```
 
 ```go
-db, err := sql.Open("mysql", "root:1234@/poc")
-if err != nil {
-    panic(err)
-}
-
-db.SetConnMaxLifetime(time.Minute * 3)
-db.SetMaxOpenConns(10)
-db.SetMaxIdleConns(10)
-
 rows, err := db.Query("SELECT name, color, price FROM fruit LIMIT 50")
 if err != nil {
     panic(err)
