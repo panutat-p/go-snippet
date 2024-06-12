@@ -47,6 +47,12 @@ if err != nil {
 ```
 
 ```go
+type Fruit struct {
+    Name  string
+    Color string
+    Price decimal.Decimal // "github.com/shopspring/decimal"
+}
+
 f := Fruit{
     Name:  "Apple",
     Color: "Red",
@@ -60,6 +66,12 @@ if err != nil {
 ```
 
 ```go
+type Fruit struct {
+    Name  string
+    Color string
+    Price decimal.Decimal // "github.com/shopspring/decimal"
+}
+
 fruits := []Fruit{
     {Name: "apple", Color: "red", Price: decimal.NewFromFloat(15.00)},
     {Name: "banana", Color: "yellow", Price: decimal.NewFromFloat(8.50)},

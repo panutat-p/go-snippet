@@ -33,3 +33,39 @@ func main() {
     }
 }
 ```
+
+```go
+_, err = db.Exec("TRUNCATE TABLE fruit")
+if err != nil {
+    panic(err)
+}
+```
+
+```go
+_, err = db.Exec("DELETE FROM fruit")
+if err != nil {
+    panic(err)
+}
+```
+
+```go
+type Fruit struct {
+    Name  string          `db:"name"`
+    Color string          `db:"color"`
+    Price decimal.Decimal `db:"price"`
+}
+
+fruits := []Fruit{
+    {Name: "apple", Color: "red", Price: decimal.NewFromFloat(15.00)},
+    {Name: "banana", Color: "yellow", Price: decimal.NewFromFloat(8.50)},
+    {Name: "carrot", Color: "orange", Price: decimal.NewFromFloat(12.50)},
+}
+
+_, err := db.NamedExec(
+    `INSERT INTO fruit (name, color, price) VALUES (:name, :color, :price)`,
+    fruits,
+)
+if err != nil {
+    panic(err)
+}
+```
