@@ -49,6 +49,20 @@ if err != nil {
 ```
 
 ```go
+_, err := db.NamedExec(
+    `INSERT INTO fruit (name, color, price) VALUES (:name, :color, :price)`,
+    map[string]any{
+        "name": "apple",
+        "color": "red",
+        "price": decimal.NewFromFloat(15.00),
+    },
+)
+if err != nil {
+    panic(err)
+}
+```
+
+```go
 type Fruit struct {
     Name  string          `db:"name"`
     Color string          `db:"color"`
