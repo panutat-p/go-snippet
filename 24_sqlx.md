@@ -83,3 +83,21 @@ if err != nil {
     panic(err)
 }
 ```
+
+```go
+type Fruit struct {
+    Name  string          `db:"name"`
+    Color string          `db:"color"`
+    Price decimal.Decimal `db:"price"`
+}
+
+var fruits []Fruit
+err := db.Select(&fruits, "SELECT * FROM fruit")
+if err != nil {
+    panic(err)
+}
+
+for _, fruit := range fruits {
+    fmt.Printf("name: %s, color: %s, price: %s\n", fruit.Name, fruit.Color, fruit.Price)
+}
+```
