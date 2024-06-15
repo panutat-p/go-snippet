@@ -57,6 +57,68 @@ type Fruit struct {
 }
 ```
 
+## Struct diff
+
+```go
+package main
+
+import (
+    "fmt"
+    "reflect"
+    "time"
+)
+
+func main() {
+    fruits := []Fruit{
+        {"apple", 15, "Hokkaido", time.Now()},
+        {"apple", 15, "Yamanashi", time.Now()},
+        {"apple red", 30, "Yamanashi", time.Now()},
+    }
+
+    for i := 0; i < len(fruits)-1; i++ {
+        m := Diff(fruits[i], fruits[i+1])
+        if len(m) > 0 {
+            fmt.Printf("👉 Diff of fruit %d & fruit %d:\n", i, i+1)
+            for field, value := range m {
+                fmt.Printf("   %s: %v\n", field, value)
+            }
+            fmt.Println()
+        }
+    }
+}
+
+type Fruit struct {
+    Name        string
+    Price       int
+    Factory     string
+    Produced_at time.Time `diff:"ignore"`
+}
+
+func Diff(a, b any) map[string]any {
+    if a == nil || b == nil {
+        return nil
+    }
+
+    va := reflect.ValueOf(a)
+    vb := reflect.ValueOf(b)
+
+    ta := va.Type()
+
+    diff := make(map[string]interface{})
+    for i := 0; i < va.NumField(); i++ {
+        if ta.Field(i).Tag.Get("diff") == "ignore" {
+            continue
+        }
+
+        if va.Field(i).Interface() != vb.Field(i).Interface() {
+            diff[ta.Field(i).Name] = vb.Field(i).Interface()
+        }
+    }
+
+    return diff
+}
+```
+
 ## Recursive reflection
 
 ```go
