@@ -1,4 +1,4 @@
-# database/sql
+# sqlx
 
 https://github.com/jmoiron/sqlx
 
