@@ -93,19 +93,16 @@ for _, f := range fruits {
 ```
 
 ```go
-rows, err := db.Query("SELECT name, color, price FROM fruit LIMIT 50")
-if err != nil {
-    panic(err)
-}
-defer rows.Close()
-
 type Fruit struct {
     Name  string
     Color string
     Price decimal.Decimal // "github.com/shopspring/decimal"
 }
+
 var fruit Fruit
-err = db.QueryRow("SELECT name, color, price FROM fruit WHERE id = ?", 1).Scan(&fruit.Name, &fruit.Color, &fruit.Price)
+err := db.
+    QueryRow("SELECT name, color, price FROM fruit WHERE id = ?", 1).
+    Scan(&fruit.Name, &fruit.Color, &fruit.Price)
 if err != nil {
     panic(err)
 }
