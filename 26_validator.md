@@ -25,6 +25,24 @@ if err != nil {
 }
 ```
 
+## Print validation failure message
+
+```go
+validate := validator.New()
+err := validate.Struct(p)
+if err != nil {
+    var ve validator.ValidationErrors
+    if errors.As(err, &ve) {
+        fmt.Println("🔴 Validation failed")
+        for _, err := range ve {
+            fmt.Printf("Field: '%s', Condition: '%s', Actual: '%v'\n", err.Field(), err.Tag(), err.Param())
+        }
+    } else {
+        fmt.Println(err)
+    }
+}
+```
+
 ```go
 type Person struct {
     Name   string `validate:"required"`
