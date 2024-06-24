@@ -43,6 +43,12 @@ if err != nil {
 }
 ```
 
+## Custom valivalidation failure message
+
+https://docs.gofiber.io/guide/validation
+
+https://github.com/go-playground/validator/blob/master/_examples/translations/main.go
+
 ```go
 type Person struct {
     Name   string `validate:"required"`
