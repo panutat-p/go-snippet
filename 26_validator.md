@@ -98,3 +98,43 @@ if err != nil {
     fmt.Println(err) // Key: 'Person.Height' Error:Field validation for 'Height' failed on the 'validHeight' tag
 }
 ```
+
+## Register types
+
+```go
+package main
+
+import (
+    "database/sql"
+    "database/sql/driver"
+    "reflect"
+
+    "github.com/go-playground/validator/v10"
+)
+
+func main() {
+    validate := validator.New()
+    validate.RegisterCustomTypeFunc(
+        ValidateValuer,
+        sql.NullString{},
+        sql.NullInt64{},
+        sql.NullInt32{},
+        sql.NullInt16{},
+        sql.NullBool{},
+        sql.NullFloat64{},
+        sql.NullFloat32{},
+    )
+}
+
+func ValidateValuer(field reflect.Value) any {
+    val, ok := field.Interface().(driver.Valuer)
+    if !ok {
+        return nil
+    }
+    v, err := val.Value()
+    if err != nil {
+        return nil
+    }
+    return v
+}
+```
