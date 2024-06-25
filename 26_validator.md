@@ -25,24 +25,6 @@ if err != nil {
 }
 ```
 
-## Print validation failure message
-
-```go
-validate := validator.New()
-err := validate.Struct(p)
-if err != nil {
-    var ve validator.ValidationErrors
-    if errors.As(err, &ve) {
-        fmt.Println("🔴 Validation failed")
-        for _, err := range ve {
-            fmt.Printf("Field: '%s', Condition: '%s', Actual: '%v'\n", err.Field(), err.Tag(), err.Param())
-        }
-    } else {
-        fmt.Println(err)
-    }
-}
-```
-
 ## Custom valivalidation failure message
 
 https://docs.gofiber.io/guide/validation
@@ -62,10 +44,20 @@ p := Person{
 
 validate := validator.New()
 err := validate.Struct(p)
-fmt.Println(err) // nil
+if err != nil {
+    var errv validator.ValidationErrors
+    if errors.As(err, &errv) {
+        fmt.Println("🔴 Validation failed")
+        for _, e := range errv {
+            fmt.Printf("Field: '%s', Condition: '%s', Actual: '%v'\n", e.Field(), e.Tag(), e.Param())
+        }
+    } else {
+        fmt.Println(err)
+    }
+}
 ```
 
-## Custom
+## Custom validator tag
 
 ```go
 type Person struct {
