@@ -46,3 +46,10 @@ if res.IsError() {
 }
 fmt.Printf("%+v\n", users)
 ```
+
+```go
+client := resty.New()
+client.
+    SetRetryCount(3).
+    SetRetryWaitTime(500 * time.Millisecond) // default is 100ms
+```
