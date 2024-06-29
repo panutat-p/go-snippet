@@ -47,6 +47,8 @@ if err := e.Shutdown(ctx); err != nil {
 
 ## Middleware
 
+### Request logger
+
 https://echo.labstack.com/docs/middleware/logger#new-requestlogger-middleware
 
 ```go
@@ -57,6 +59,18 @@ func RequestLogger(next echo.HandlerFunc) echo.HandlerFunc {
     latency := time.Since(t1)
     fmt.Printf("%s %s %v \n", c.Request().Method, c.Request().URL.Path, latency)
     return err
+  }
+}
+```
+
+### IP address
+
+```go
+func IpAddressExtractor(next echo.HandlerFunc) echo.HandlerFunc {
+  return func(c echo.Context) error {
+    ip := c.RealIP() // get IP address from network layer
+    c.Set("client_ip", ip)
+    return next(c)
   }
 }
 ```
