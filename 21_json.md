@@ -53,7 +53,7 @@ func (f Fruit) MarshalJSON() ([]byte, error) {
     type Alias Fruit
     
     return json.Marshal(&struct {
-        Alias
+            Alias
             Price json.Number `json:"price"`
         }{
             Alias: (Alias)(f),
@@ -77,7 +77,7 @@ func (f *Fruit) UnmarshalJSON(b []byte) error {
 }
 ```
 
-## Marshal to null (override)
+### Alias
 
 ```go
 type Person struct {
@@ -120,7 +120,7 @@ func main() {
 }
 ```
 
-## Marshal to null (declare tags in method)
+### Without alias
 
 ```go
 type Person struct {
