@@ -133,16 +133,6 @@ func (m *OrderedMap) String() string {
 }
 
 func (m *OrderedMap) GoString() string {
-    var sb strings.Builder
-    sb.WriteString("{")
-    for i, key := range m.list {
-        if i == len(m.list)-1 {
-            sb.WriteString(fmt.Sprintf("%s: %d", key, m.dict[key]))
-        } else {
-            sb.WriteString(fmt.Sprintf("%s: %d, ", key, m.dict[key]))
-        }
-    }
-    sb.WriteString("}")
-    return sb.String()
+    return m.String()
 }
 ```
