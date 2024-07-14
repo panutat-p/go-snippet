@@ -29,3 +29,19 @@ if err != nil {
 }
 fmt.Println(string(b))
 ```
+
+```go
+reqBody := []byte(`{"key": "value"}`)
+req, err := http.NewRequest("POST", "http://example.com", bytes.NewBuffer(requestBody))
+req.Header.Set("Content-Type", "application/json")
+res, err := client.Do(req)
+if err != nil {
+    panic(err)
+}
+defer res.Body.Close()
+b, err := io.ReadAll(res.Body)
+if err != nil {
+    panic(err)
+}
+fmt.Println(string(b))
+```
