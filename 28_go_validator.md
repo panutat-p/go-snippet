@@ -5,6 +5,34 @@ https://github.com/go-playground/validator
 ## Built-in
 
 ```go
+validate := validator.New()
+type Fruit struct {
+	Name string `validate:"required"`
+}
+fruit := Fruit{
+	Name: "",
+}
+err := validate.Struct(fruit)
+if err != nil {
+	panic(err) // Key: 'Fruit.Name' Error:Field validation for 'Name' failed on the 'required' tag
+}
+```
+
+```go
+validate := validator.New()
+type Fruit struct {
+	Name *string `validate:"omitnil,ne="`
+}
+fruit := Fruit{
+	Name: null.StringFrom("").Ptr(),
+}
+err := validate.Struct(fruit)
+if err != nil {
+	panic(err) // Key: 'Fruit.Name' Error:Field validation for 'Name' failed on the 'ne' tag
+}
+```
+
+```go
 type Profile struct {
     Username string `validate:"required,alphanum,min=4,max=20"`
     Password string `validate:"required,min=6,max=20"`
