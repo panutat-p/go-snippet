@@ -7,28 +7,28 @@ https://github.com/go-playground/validator
 ```go
 validate := validator.New()
 type Fruit struct {
-	Name string `validate:"required"`
+    Name string `validate:"required"`
 }
 fruit := Fruit{
-	Name: "",
+    Name: "",
 }
 err := validate.Struct(fruit)
 if err != nil {
-	panic(err) // Key: 'Fruit.Name' Error:Field validation for 'Name' failed on the 'required' tag
+    panic(err) // Key: 'Fruit.Name' Error:Field validation for 'Name' failed on the 'required' tag
 }
 ```
 
 ```go
 validate := validator.New()
 type Fruit struct {
-	Name *string `validate:"omitnil,ne="`
+    Name *string `validate:"omitnil,ne="`
 }
 fruit := Fruit{
-	Name: null.StringFrom("").Ptr(),
+    Name: null.StringFrom("").Ptr(),
 }
 err := validate.Struct(fruit)
 if err != nil {
-	panic(err) // Key: 'Fruit.Name' Error:Field validation for 'Name' failed on the 'ne' tag
+    panic(err) // Key: 'Fruit.Name' Error:Field validation for 'Name' failed on the 'ne' tag
 }
 ```
 
