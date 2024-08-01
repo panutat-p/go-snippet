@@ -2,7 +2,7 @@
 
 https://github.com/mongodb/mongo-go-driver
 
-```shell
+```sh
 go get go.mongodb.org/mongo-driver/mongo
 ```
 

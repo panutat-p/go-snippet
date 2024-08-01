@@ -2,7 +2,7 @@
 
 https://gorm.io
 
-```shell
+```sh
 go get gorm.io/gorm
 ```
 

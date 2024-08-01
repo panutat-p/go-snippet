@@ -2,7 +2,7 @@
 
 https://echo.labstack.com
 
-```shell
+```sh
 go get github.com/labstack/echo/v4
 ```
 

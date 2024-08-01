@@ -36,7 +36,7 @@ func PrintDigit(num int) {
 
 https://github.com/uber-go/nilaway
 
-```shell
+```sh
 go install go.uber.org/nilaway/cmd/nilaway@latest
 ```
 

@@ -3,23 +3,23 @@
 ## Go ENV
 
 Get
-```shell
+```sh
 go env GOROOT
 ```
 
 Set
-```shell
+```sh
 go env -w GO111MODULE=on
 ```
 
 https://goproxy.io/docs/GOPRIVATE-env.html
 
-```shell
+```sh
 go env -w GOPRIVATE='private-repo.com/*'
 ```
 
 Unset
-```shell
+```sh
 go env -u GO111MODULE
 ```
 
@@ -31,37 +31,37 @@ https://go.dev/ref/mod
 * Go 1.17+, module graph pruning, the go command avoids loading the complete module graph until (and unless) it is needed
 * Go 1.17+, the go command adds all indirect requirements to `go.mod`
 
-```shell
+```sh
 go mod init project-name
 ```
 
 Install a dependency without updating other dependencies
-```shell
+```sh
 go get github.com/joho/godotenv
 ```
 
 Upgrade to the latest version if the package is already a dependency
-```shell
+```sh
 go get -u github.com/joho/godotenv
 ```
 
 Remove any unnecessary dependencies and ensure the cleanliness of your module files
-```shell
+```sh
 go mod tidy
 ```
 
 Download the dependencies specified in `go.mod`
-```shell
+```sh
 go mod download
 ```
 
-```shell
+```sh
 go list -m all
 ```
 
 ## Go Test
 
-```shell
+```sh
 go test ./...
 ```
 

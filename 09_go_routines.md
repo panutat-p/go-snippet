@@ -65,7 +65,7 @@ func PrintFruit(f Fruit) {
 
 https://pkg.go.dev/golang.org/x/sync/errgroup
 
-```shell
+```sh
 go get golang.org/x/sync/errgroup
 ```
 
