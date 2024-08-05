@@ -27,6 +27,20 @@ if err != nil {
 fmt.Println("🟢 fruit:", fruit)
 ```
 
+```go
+sb := sqlbuilder.NewSelectBuilder()
+fromSb := sqlbuilder.NewSelectBuilder()
+statusSb := sqlbuilder.NewSelectBuilder()
+sb.Select("id")
+sb.From(sb.BuilderAs(fromSb, "user"))
+sb.From(sb.In("status", statusSb))
+fromSb.Select("id").From("user").Where(fromSb.GreaterThan("level", 4))
+statusSb.Select("status").From("config").Where(statusSb.Equal("state", 1))
+command, args := sb.Build()
+fmt.Println("👉", command)
+fmt.Println("👉", args)
+```
+
 ## Query with ORM
 
 ```go
@@ -54,6 +68,33 @@ err = rows.Scan(userStruct.Addr(&fruit)...)
 if err != nil {
     panic(err)
 }
+```
+
+```go
+type Fruit struct {
+    ID   string `db:"id" fieldtag:"pk"`
+    Name string `db:"name"`
+}
+type Factory struct {
+    ID      string `db:"id" fieldtag:"pk"`
+    Name    string `db:"name"`
+    Product string `db:"product"`
+}
+var ormFactory = sqlbuilder.NewStruct(new(Factory))
+sb1 := ormFactory.SelectFrom("factory")
+var ormFruit = sqlbuilder.NewStruct(new(Fruit))
+sb := ormFruit.SelectFrom("fruit")
+sb.JoinWithOption(
+    sqlbuilder.LeftJoin,
+    sb.BuilderAs(sb1, "factory"),
+    "fruit.name = factory.product",
+)
+sb.Where(
+    sb.GreaterEqualThan("fruit.id", "1"),
+)
+command, args := sb.Build()
+fmt.Println("👉", command)
+fmt.Println("👉", args)
 ```
 
 ## Insert
