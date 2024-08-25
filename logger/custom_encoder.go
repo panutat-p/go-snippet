@@ -13,7 +13,7 @@ type CustomEncoder struct {
 }
 
 func NewCustomEncoder(c zapcore.EncoderConfig) (zapcore.Encoder, error) {
-  return &CustomEncoder{
+	return &CustomEncoder{
 		Encoder: zapcore.NewJSONEncoder(c),
 	}
 }
