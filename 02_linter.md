@@ -16,6 +16,10 @@ https://pkg.go.dev/golang.org/x/tools/cmd/goimports
 go install golang.org/x/tools/cmd/goimports@latest
 ```
 
+```sh
+goimports -w .
+```
+
 ## gci
 
 https://github.com/daixiang0/gci
