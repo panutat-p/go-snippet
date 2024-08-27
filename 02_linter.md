@@ -38,6 +38,14 @@ gci write -s standard -s default -s 'prefix(github.com/panutat-p)' -s localmodul
 
 ## golangci-lint
 
+```sh
+golangci-lint run ./...
+```
+
+```sh
+golangci-lint run --fix ./...
+```
+
 https://github.com/golangci/golangci-lint
 
 ```yaml
