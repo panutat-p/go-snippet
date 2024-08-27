@@ -39,3 +39,50 @@ gci write -s standard -s default -s 'prefix(github.com/panutat-p)' -s localmodul
 ## golangci-lint
 
 https://github.com/golangci/golangci-lint
+
+```yaml
+run:
+  concurrency: 4
+  timeout: 5m
+
+output:
+  formats:
+    - format: colored-line-number
+      path: stderr
+    - format: html
+      path: golangci_lint_report.html
+
+linters:
+  enable:
+    - errcheck
+    - gocyclo
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - gci
+
+linters-settings:
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(github.com/panutat-p)
+      - localmodule
+    skip-generated: true
+    custom-order: true
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude-rules:
+    - linters:
+        - gosec
+      text: "G115: integer overflow conversion*"
+    - linters:
+        - errcheck
+      text: "Error return value of .*Close.* is not checked"
+```
