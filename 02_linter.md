@@ -4,8 +4,14 @@
 
 https://pkg.go.dev/cmd/gofmt
 
+Formats files in current directory and all sub-directories
 ```sh
-gofmt -w .
+gofmt -l -w .
+```
+
+The wrapper commmand of `gofmt -l -w .`
+```sh
+go fmt ./...
 ```
 
 ## goimports
