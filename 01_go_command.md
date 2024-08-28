@@ -46,10 +46,12 @@ https://goproxy.io/docs/GOPRIVATE-env.html
 * Go 1.17+, module graph pruning, the go command avoids loading the complete module graph until (and unless) it is needed
 * Go 1.17+, the go command adds all indirect requirements to `go.mod`
 
+Init Go module
 ```sh
 go mod init project-name
 ```
 
+Change Go version in Go module
 ```sh
 go mod edit -go 1.23.0
 ```
@@ -69,13 +71,19 @@ Remove any unnecessary dependencies and ensure the cleanliness of your module fi
 go mod tidy
 ```
 
-Download the dependencies specified in `go.mod`
+Download the dependencies
 ```sh
 go mod download
 ```
 
+List all dependencies, show available upgrade or deprecated
 ```sh
-go list -m all
+go list -u -m all
+```
+
+Show dependency information & versions
+```sh
+go list -m -u -versions -json github.com/labstack/echo/v4
 ```
 
 Shows a shortest path in the import graph
