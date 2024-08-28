@@ -12,20 +12,35 @@ Set
 go env -w GO111MODULE=on
 ```
 
-https://goproxy.io/docs/GOPRIVATE-env.html
-
-```sh
-go env -w GOPRIVATE='private-repo.com/*'
-```
-
 Unset
 ```sh
 go env -u GO111MODULE
 ```
 
+Exclude the package from the checksum database\
+```sh
+go env -w GOPRIVATE='private-repo.com/*'
+```
+
+Specify the proxy server that serving the private modules
+```sh
+go env -w GOPROXY='proxy.example.com'
+```
+
+## Go Toolchains
+
+https://tip.golang.org/doc/toolchain
+
+Update the module to require the latest released Go toolchain
+```sh
+go get go@latest
+```
+
 ## Go Module
 
 https://go.dev/ref/mod
+
+https://goproxy.io/docs/GOPRIVATE-env.html
 
 * Go 1.16+, module-aware mode is enabled by default when `GO111MODULE=on` or `GO111MODULE=`
 * Go 1.17+, module graph pruning, the go command avoids loading the complete module graph until (and unless) it is needed
@@ -35,14 +50,18 @@ https://go.dev/ref/mod
 go mod init project-name
 ```
 
-Install a dependency without updating other dependencies
 ```sh
-go get github.com/joho/godotenv
+go mod edit -go 1.23.0
 ```
 
-Upgrade to the latest version if the package is already a dependency
+Install or update a dependency without updating other dependencies
 ```sh
-go get -u github.com/joho/godotenv
+go get github.com/labstack/echo/v4
+```
+
+Upgrade to the latest version including its dependencies
+```sh
+go get -u github.com/labstack/echo/v4
 ```
 
 Remove any unnecessary dependencies and ensure the cleanliness of your module files
@@ -57,6 +76,11 @@ go mod download
 
 ```sh
 go list -m all
+```
+
+Shows a shortest path in the import graph
+```sh
+go mod why github.com/labstack/echo/v4
 ```
 
 ## Go Test
