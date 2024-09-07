@@ -53,7 +53,7 @@ go mod init project-name
 
 Change Go version in Go module
 ```sh
-go mod edit -go 1.23.0
+go mod edit -go 1.23.1
 ```
 
 Install or update a dependency without updating other dependencies

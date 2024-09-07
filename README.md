@@ -1,3 +1,3 @@
 # go-snippets
 
-https://go.dev/learn
+https://github.com/panutat-p/go-snippet
