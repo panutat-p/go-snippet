@@ -27,18 +27,11 @@ Specify the proxy server that serving the private modules
 go env -w GOPROXY='proxy.example.com'
 ```
 
-## Go Toolchains
-
-https://tip.golang.org/doc/toolchain
-
-Update the module to require the latest released Go toolchain
-```sh
-go get go@latest
-```
-
 ## Go Module
 
 https://go.dev/ref/mod
+
+https://tip.golang.org/doc/toolchain
 
 https://goproxy.io/docs/GOPRIVATE-env.html
 
@@ -51,9 +44,19 @@ Init Go module
 go mod init project-name
 ```
 
-Change Go version in Go module
+Edit Go to specified version
 ```sh
-go mod edit -go 1.23.1
+go mod edit -go 1.23
+```
+
+Upgrade Go to minor version with `toolchain` patch version
+```sh
+go mod tidy -go=1.23
+```
+
+Upgrade Go to patch version
+```sh
+go get go@1.23
 ```
 
 Install or update a dependency without updating other dependencies
