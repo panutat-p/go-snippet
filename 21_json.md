@@ -67,6 +67,32 @@ func PrintJSON(o any) {
 }
 ```
 
+## json types
+
+```go
+import (
+    "encoding/json"
+    "fmt"
+)
+
+type Fruit struct {
+    Name  string      `json:"name"`
+    Price json.Number `json:"price"`
+}
+
+f := Fruit{
+    Name:  "Apple",
+    Price: json.Number("100"),
+}
+
+b, err := json.Marshal(f)
+if err != nil {
+    panic(err)
+}
+
+fmt.Println(b) // {"name":"Apple","price":100}
+```
+
 ## Marshal & Unmarshal
 
 ```go
